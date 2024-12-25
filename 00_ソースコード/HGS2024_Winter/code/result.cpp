@@ -166,6 +166,8 @@ HRESULT CResult::Init(void)
 	m_pScore[5] = CScore::Create(D3DXVECTOR3(800.0f, 70.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 50.0f, 100.0f);
 	m_pScore[5]->AddScore(CScore::GetScoreResult());
 
+	pSound->PlaySound(CSound::SOUND_LABEL_BGM_RESULT);
+
 	//¬Œ÷‚ğ•Ô‚·
 	return S_OK;
 }

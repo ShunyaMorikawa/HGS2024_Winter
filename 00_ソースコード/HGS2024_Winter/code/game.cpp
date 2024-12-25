@@ -33,6 +33,13 @@ CGame *CGame::m_pGame = nullptr;		// ゲームのポインタ
 //========================================
 namespace
 {
+	const int STATE_TIME[CGame::STATE_MAX] =
+	{
+		30,
+		30,
+		30,
+		60,
+	};// プレイヤーの目標位置
 }
 
 //========================================
@@ -48,6 +55,7 @@ m_pObj2D		(nullptr),	// オブジェクト2Dのポインタ
 m_pTime			(nullptr)
 {
 	m_pGame = nullptr;		// ゲームのポインタ
+	m_state = STATE_START;
 }
 
 //========================================
@@ -96,6 +104,9 @@ HRESULT CGame::Init(void)
 	//テクスチャのポインタ
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 
+	//テクスチャのポインタ
+	CSound* pSound = CManager::GetInstance()->GetSound();
+
 	// プレイヤー生成
 	CPlayer::Create(Constance::PLAYER_TXT);
 
@@ -118,6 +129,8 @@ HRESULT CGame::Init(void)
 
 	//ポーズの状態
 	m_bPause = false;
+
+	pSound->PlaySound(CSound::SOUND_LABEL_BGM_GAME);
 
 	return S_OK;
 }
@@ -174,6 +187,32 @@ void CGame::Update(void)
 
 	// デバッグ表示の情報取得
 	CDebugProc* pDebugProc = CManager::GetInstance()->GetDebugProc();
+
+	m_nTransition++;
+
+	if (m_nTransition > STATE_TIME[m_state])
+	{
+		m_nTransition = 0;
+
+		switch (m_state)
+		{
+		case CGame::STATE_WAIT:
+			m_state = STATE_START;
+			break;
+		case CGame::STATE_START:
+			m_state = STATE_GAME;
+			break;
+		case CGame::STATE_GAME:
+			break;
+		case CGame::STATE_FINISH:
+			break;
+		case CGame::STATE_MAX:
+			m_state = STATE_START;
+			break;
+		default:
+			break;
+		}
+	}
 
 	// デバッグ表示
 	pDebugProc->Print("\nゲーム\n");

@@ -89,6 +89,9 @@ HRESULT CTutorial::Init(void)
 	// テクスチャ情報取得
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 
+	// サウンド情報取得
+	CSound* pSound = CManager::GetInstance()->GetSound();
+
 	if (m_pObj2D == nullptr)
 	{// オブジェクト2D生成
 		m_pObj2D = CObject2D::Create();
@@ -108,6 +111,8 @@ HRESULT CTutorial::Init(void)
 
 	// 終了してない
 	m_bEnd = false;
+
+	pSound->PlaySound(CSound::SOUND_LABEL_BGM_TUTORIAL);
 
 	//成功を返す
 	return S_OK;
