@@ -48,6 +48,13 @@ namespace Constance
 	const std::string PLAYER_TXT = "data//FILE//player.txt";	// プレイヤー情報パス
 	const std::string ENEMY_TXT = "data//FILE//enemy.txt";		// エネミー情報パス
 	const std::string TUTORIAL_ENEMY_TXT = "data//FILE//tutorialenemy.txt";		// エネミー情報パス
+
+	const std::string OTAKU_TXT[3] =
+	{
+		"data//FILE//enemy.txt",
+		"data//FILE//enemy.txt",
+		"data//FILE//enemy.txt",
+	};
 }
 
 #endif

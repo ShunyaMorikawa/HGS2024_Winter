@@ -17,6 +17,7 @@ class CModel;
 class CMotion;
 class CEffect;
 class CGauge;
+class CBillboard;
 
 //========================================
 //エネミークラス
@@ -40,16 +41,26 @@ public:
 	// メンバ関数
 	static CEnemy* Create(std::string pfile);
 	HRESULT Init(void) { return S_OK; }		// 純粋仮想
-	HRESULT Init(std::string pfile);
+	virtual HRESULT Init(std::string pfile);
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
 	void Hit(int nPresent);
+	virtual void Angry();
 
 	int GetNumPresent() { return m_nNumPresent; }
 	void SetParent(CEnemy* pEnemy) { m_pParent = pEnemy; }
 	void SetChild(CEnemy* pChild) { m_pChild = pChild; }
 	void SetNumLane(int nNumLane) { m_nNumLane = nNumLane; }
+
+protected:
+
+	//メンバ変数
+	CBillboard* m_pBillboard[2];
+	D3DXVECTOR3 m_GolePos;
+	int m_nNumPresent;	// カウント
+	int m_nNumLane;		// カウント
+	int m_nCntWait;		// カウント
 
 private:
 	void NockBack();
@@ -60,14 +71,43 @@ private:
 	//メンバ変数
 	CEnemy* m_pParent;
 	CEnemy* m_pChild;
-	int m_nNumPresent;	// カウント
-	int m_nNumLane;		// カウント
-	int m_nCntWait;		// カウント
+	
+	
 	int m_nState;		// 状態
 
 	bool bGet;
 
 	ENEMYSTATE m_eState;	// 状態
+};
+
+//========================================
+//子供のエネミークラス
+//========================================
+class CEnemyChild : public CEnemy
+{
+public:
+
+	static CEnemyChild* Create(std::string pfile);
+	HRESULT Init(std::string pfile) override;
+
+private:
+	void Angry() override;
+
+};
+
+//========================================
+//オタクのエネミークラス
+//========================================
+class CEnemyOtaku : public CEnemy
+{
+public:
+
+	static CEnemyOtaku* Create(std::string pfile);
+	HRESULT Init(std::string pfile) override;
+
+private:
+	void Angry() override;
+
 };
 
 #endif
