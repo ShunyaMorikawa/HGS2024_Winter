@@ -21,6 +21,7 @@
 #include "useful.h"
 #include "enemy_manager.h"
 #include "score.h"
+#include "timer.h"
 
 //========================================
 //静的メンバ変数
@@ -43,7 +44,8 @@ m_nTransition	(0),		// 遷移時間
 m_pObjectX		(nullptr),	// オブジェクトXのポインタ
 m_pIdxMesh		(nullptr),	// インデックスメッシュのポインタ
 m_pFade			(nullptr),	// フェードのポインタ
-m_pObj2D		(nullptr)	// オブジェクト2Dのポインタ
+m_pObj2D		(nullptr),	// オブジェクト2Dのポインタ
+m_pTime			(nullptr)
 {
 	m_pGame = nullptr;		// ゲームのポインタ
 }
@@ -106,6 +108,11 @@ HRESULT CGame::Init(void)
 	// スコア生成
 	m_pScore = CScore::Create(D3DXVECTOR3(410.0f, 100.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 80.0f, 50.0f);
 
+	if (m_pTime == nullptr)
+	{// タイム生成
+		m_pTime = CTimer::Create(D3DXVECTOR3(640.0f, 320.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 80.0f, 50.0f);
+	}
+
 	// 遷移時間
 	m_nTransition = 0;
 
@@ -124,6 +131,12 @@ void CGame::Uninit(void)
 	{
 		m_pObj2D->Uninit();
 		m_pObj2D = nullptr;
+	}
+
+	if (m_pTime != nullptr)
+	{
+		m_pTime->Uninit();
+		m_pTime = nullptr;
 	}
 
 	// サウンド情報取得

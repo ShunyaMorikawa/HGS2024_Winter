@@ -57,6 +57,7 @@
     <ClCompile Include="code\score.cpp" />
     <ClCompile Include="code\sound.cpp" />
     <ClCompile Include="code\texture.cpp" />
+    <ClCompile Include="code\timer.cpp" />
     <ClCompile Include="code\title.cpp" />
     <ClCompile Include="code\titleplayer.cpp" />
     <ClCompile Include="code\tutorial.cpp" />
@@ -99,6 +100,7 @@
     <ClInclude Include="code\score.h" />
     <ClInclude Include="code\sound.h" />
     <ClInclude Include="code\texture.h" />
+    <ClInclude Include="code\timer.h" />
     <ClInclude Include="code\title.h" />
     <ClInclude Include="code\titleplayer.h" />
     <ClInclude Include="code\tutorial.h" />

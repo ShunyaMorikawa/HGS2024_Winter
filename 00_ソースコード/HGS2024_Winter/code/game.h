@@ -28,6 +28,7 @@ class CWall;
 class CMapObject;
 class CEnemyManager;
 class CScore;
+class CTimer;
 
 //========================================
 // 定数定義
@@ -72,6 +73,7 @@ private:
 	CObject2D* m_pObj2D;		// オブジェクト2Dのポインタ
 	CEnemyManager* m_pEnemyManager;	// 敵マネージャーのポインタ
 	CScore* m_pScore;
+	CTimer* m_pTime;
 	
 };
 
