@@ -145,9 +145,6 @@ void CGame::Update(void)
 	// プレイヤーの情報取得
 	CPlayer* pPlayer = CPlayer::GetInstance();
 
-	// 敵の情報取得
-	CEnemy* pEnemy = CEnemy::GetInstance();
-
 	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true)
 	{// 画面遷移(フェード)
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_RESULT);

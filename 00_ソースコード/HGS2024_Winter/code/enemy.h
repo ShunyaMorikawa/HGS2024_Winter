@@ -69,8 +69,6 @@ private:
 	ENEMYSTATE m_eState;	// 状態
 
 	CGauge* m_pGauge;	// ゲージのポインタ
-
-	static CEnemy* m_pEnemy;	// 自身のポインタ
 };
 
 #endif

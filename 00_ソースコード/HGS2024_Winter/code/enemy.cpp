@@ -25,11 +25,6 @@
 #include "result.h"
 
 //========================================
-// 静的メンバ変数
-//========================================
-CEnemy* CEnemy::m_pEnemy = nullptr;
-
-//========================================
 //名前空間
 //========================================
 namespace
@@ -78,14 +73,11 @@ CEnemy::~CEnemy()
 //========================================
 CEnemy* CEnemy::Create(std::string pfile)
 {
-	if (m_pEnemy == nullptr)
-	{//	インスタンス生成
-		m_pEnemy = new CEnemy;
+	CEnemy* pEnemy = new CEnemy;
 
-		m_pEnemy->Init(pfile);
-	}
+	pEnemy->Init(pfile);
 
-	return m_pEnemy;
+	return pEnemy;
 }
 
 //========================================
@@ -136,7 +128,6 @@ void CEnemy::Uninit(void)
 
 	// 終了
 	CCharacter::Uninit();
-	m_pEnemy = nullptr;
 }
 
 //========================================
