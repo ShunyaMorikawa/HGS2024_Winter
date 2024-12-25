@@ -24,6 +24,7 @@
 #include "gauge.h"
 #include "result.h"
 #include "enemy_manager.h"
+#include "billboard.h"
 
 //========================================
 //名前空間
@@ -44,18 +45,50 @@ namespace
 	const float GAUGE_SIZE = 50.0f;		// ゲージサイズ
 	const float RESULT_HEIGHT = 200.0f;		// リザルトの高さ
 
-	const D3DXVECTOR3 INITIAL_POS = { 0.0f, 0.0f, -500.0f };	// 敵の初期位置
+	const D3DXVECTOR3 INITIAL_POS = { 0.0f, 0.0f, -3000.0f };	// 敵の初期位置
 	const D3DXVECTOR3 GAUGE_POS = { 600.0f, 25.0f, 0.0f };	// 敵ゲージの初期位置
+	const D3DXVECTOR3 GET_POS = { -1000.0f, 0.0f, 300.0f };	// プレゼント受け取った後の位置
+	const D3DXVECTOR3 GET_POS_OTAKU = { 1000.0f, 0.0f, 300.0f };	// プレゼント受け取った後の位置
+	const D3DXVECTOR3 LANE_OFFSET = { 0.0f, 0.0f, -300.0f };	// プレゼント受け取った後の位置
+	const D3DXVECTOR3 BILLBOARD_OFFSET = { -100.0f, 200.0f, 0.0f };	// プレゼント受け取った後の位置
+
+	const D3DXVECTOR3 LANE_POS[3] =
+	{
+		{ -200.0f, 0.0f, 200.0f },
+		{ 0.0f, 0.0f, 200.0f },
+		{ 200.0f, 0.0f, 200.0f },
+	};// プレイヤーの目標位置
+
+	const char* m_apFilename[3] =
+	{
+		"data\\TEXTURE\\presentBox\\present_box_00.png",
+		"data\\TEXTURE\\presentBox\\present_box_01.png",
+		"data\\TEXTURE\\presentBox\\present_box_02.png",
+	};
+
+	const char* m_apFilenameOtaku[3] =
+	{
+		"data\\TEXTURE\\presentBox\\present_box_00.png",
+		"data\\TEXTURE\\presentBox\\present_box_01.png",
+		"data\\TEXTURE\\presentBox\\present_box_02.png",
+	};
 }
 
 //========================================
 //コンストラクタ
 //========================================
 CEnemy::CEnemy(int nPriority) : CCharacter(nPriority),
-m_nCnt		(0),			// カウント
+m_nNumPresent(0),			// カウント
+m_nNumLane(0),			// カウント
+m_nCntWait(0),
 m_eState	(STATE_NONE)	// 状態
 {//値をクリア
-
+	m_pParent = nullptr;
+	m_pChild = nullptr;
+	for (int i = 0; i < 2; i++)
+	{
+		m_pBillboard[i] = nullptr;
+	}
 }
 
 //========================================
@@ -92,7 +125,16 @@ HRESULT CEnemy::Init(std::string pfile)
 	SetPos(INITIAL_POS);
 
 	// 向き設定
-	SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	SetRot(D3DXVECTOR3(0.0f, 3.14f, 0.0f));
+
+	m_GolePos = GET_POS;
+	m_nNumPresent = rand() % 3;
+
+	m_pBillboard[0] = CBillboard::Create(INITIAL_POS + BILLBOARD_OFFSET, 100.0f, 100.0f);
+	m_pBillboard[0]->BindTexture(pTexture->Regist("data\\TEXTURE\\speech\\speech.png"));
+
+	m_pBillboard[1] = CBillboard::Create(INITIAL_POS + BILLBOARD_OFFSET, 100.0f, 100.0f);
+	m_pBillboard[1]->BindTexture(pTexture->Regist(m_apFilename[m_nNumPresent]));
 
 	return S_OK;
 }
@@ -102,7 +144,6 @@ HRESULT CEnemy::Init(std::string pfile)
 //========================================
 void CEnemy::Uninit(void)
 {
-	CEnemyManager::GetInstance()->GetListEnemy()->remove(this);
 	// 終了
 	CCharacter::Uninit();
 }
@@ -150,7 +191,19 @@ void CEnemy::Update(void)
 	move.z += cosf(rot.y + D3DX_PI) * SPEED;
 
 	// 位置を更新
-	pos += move;
+
+	if (bGet)
+	{
+		pos += (m_GolePos - pos) * 0.05f;
+	}
+	else if (m_pParent != nullptr)
+	{
+		pos += (m_pParent->GetPos() + LANE_OFFSET - pos) * 0.05f;
+	}
+	else
+	{
+		pos += (LANE_POS[m_nNumLane] - pos) * 0.05f;
+	}
 
 	// 移動量を更新(減衰させる)
 	move.x += (0.0f - move.x) * INERTIA;
@@ -176,6 +229,16 @@ void CEnemy::Update(void)
 		pos.y = 0.0f;
 		move.y = 0.0f;
 	}
+
+	Angry();
+
+	for (int i = 0; i < 2; i++)
+	{
+		m_pBillboard[i]->SetPos(pos + BILLBOARD_OFFSET);
+	}
+
+	// 向き設定
+	SetPos(pos);
 	
 	// 向き設定
 	SetRot(rot);
@@ -198,10 +261,16 @@ void CEnemy::Update(void)
 
 	// デバッグ表示
 	CDebugProc* pDebugProc = CManager::GetInstance()->GetDebugProc();
-	pDebugProc->Print("\n敵の位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
-	pDebugProc->Print("敵の向き：%f、%f、%f\n", rot.x, rot.y, rot.z);
+	//pDebugProc->Print("\n敵の位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
+	/*pDebugProc->Print("敵の向き：%f、%f、%f\n", rot.x, rot.y, rot.z);
 	pDebugProc->Print("敵の移動量：%f、%f、%f\n", move.x, move.y, move.z);
-	pDebugProc->Print("F4で敵の体力0\n");
+	pDebugProc->Print("F4で敵の体力0\n");*/
+
+	D3DXVECTOR3 vecEnemy = GET_POS - pos;
+	if (D3DXVec3Length(&vecEnemy) < 10.0f)
+	{
+		Uninit();
+	}
 }
 
 //========================================
@@ -216,19 +285,63 @@ void CEnemy::Draw(void)
 //========================================
 // ヒット処理
 //========================================
-void CEnemy::Hit(int nLife)
+void CEnemy::Hit(int nPresent)
 {
-	//CInputKeyboard情報取得
-	CInputKeyboard* pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
-
-	//CInputPad情報取得
-	CInputPad* pInputPad = CManager::GetInstance()->GetInputPad();
-
-	//テクスチャの情報取得
-	CTexture* pTexture = CManager::GetInstance()->GetTexture();
-
 	// 位置取得
 	D3DXVECTOR3 pos = GetPos();
+
+	D3DXVECTOR3 vecLane = LANE_POS[m_nNumLane] - pos;
+	if (D3DXVec3Length(&vecLane) > 150.0f) { return; }
+
+	bGet = true;
+
+	if (m_nNumPresent == nPresent)
+	{
+		
+	}
+	else
+	{
+
+	}
+
+	if (nPresent == -1)
+	{
+		m_GolePos = GET_POS_OTAKU;
+	}
+	else
+	{
+		m_GolePos = GET_POS;
+	}
+
+	if (m_pChild != nullptr)
+	{
+		m_pChild->SetParent(nullptr);
+	}
+	
+	CEnemyManager::GetInstance()->GetListEnemy(m_nNumLane)->remove(this);
+}
+
+//========================================
+// 激おこ処理
+//========================================
+void CEnemy::Angry()
+{
+	// 位置取得
+	D3DXVECTOR3 pos = GetPos();
+
+	D3DXVECTOR3 vecLane = LANE_POS[m_nNumLane] - pos;
+	if (D3DXVec3Length(&vecLane) < 150.0f)
+	{
+		m_nCntWait++;
+
+		m_pBillboard[0]->SetCol(D3DXCOLOR(1.0f, 1.0f - (m_nCntWait * 0.0033f), 1.0f - (m_nCntWait * 0.0033f), 1.0f));
+		m_pBillboard[0]->SetVertex();
+
+		if (m_nCntWait > 300)
+		{
+			Hit(3);
+		}
+	}
 }
 
 //========================================
@@ -376,4 +489,126 @@ void CEnemy::CollisionCircle()
 
 	// 位置設定
 	SetPos(posEnemy);
+}
+
+//========================================
+// 生成
+//========================================
+CEnemyChild* CEnemyChild::Create(std::string pfile)
+{
+	CEnemyChild* pEnemy = new CEnemyChild;
+
+	pEnemy->Init(pfile);
+
+	return pEnemy;
+}
+
+//========================================
+// 初期化処理
+//========================================
+HRESULT CEnemyChild::Init(std::string pfile)
+{
+	//テクスチャのポインタ
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+
+	// キャラの初期化
+	CCharacter::Init(pfile);
+
+	// 位置設定
+	SetPos(INITIAL_POS);
+
+	// 向き設定
+	SetRot(D3DXVECTOR3(0.0f, 3.14f, 0.0f));
+
+	m_GolePos = GET_POS;
+
+	m_nNumPresent = rand() % 3;
+
+	m_pBillboard[0] = CBillboard::Create(INITIAL_POS + BILLBOARD_OFFSET, 100.0f, 100.0f);
+	m_pBillboard[0]->BindTexture(pTexture->Regist("data\\TEXTURE\\speech\\speech.png"));
+
+	m_pBillboard[1] = CBillboard::Create(INITIAL_POS + BILLBOARD_OFFSET, 100.0f, 100.0f);
+	m_pBillboard[1]->BindTexture(pTexture->Regist(m_apFilename[m_nNumPresent]));
+
+	return S_OK;
+}
+
+//========================================
+// 激おこ処理
+//========================================
+void CEnemyChild::Angry()
+{
+	// 位置取得
+	D3DXVECTOR3 pos = GetPos();
+
+	D3DXVECTOR3 vecLane = LANE_POS[m_nNumLane] - pos;
+	if (D3DXVec3Length(&vecLane) < 150.0f)
+	{
+		m_nCntWait++;
+
+		m_pBillboard[0]->SetCol(D3DXCOLOR(1.0f, 1.0f - (m_nCntWait * 0.0033f), 1.0f - (m_nCntWait * 0.0033f), 1.0f));
+		m_pBillboard[0]->SetVertex();
+
+		if (m_nCntWait > 300)
+		{
+			Hit(3);
+		}
+	}
+}
+
+//========================================
+// 生成
+//========================================
+CEnemyOtaku* CEnemyOtaku::Create(std::string pfile)
+{
+	CEnemyOtaku* pEnemy = new CEnemyOtaku;
+
+	pEnemy->Init(pfile);
+
+	return pEnemy;
+}
+
+//========================================
+// 初期化処理
+//========================================
+HRESULT CEnemyOtaku::Init(std::string pfile)
+{
+	//テクスチャのポインタ
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+
+	// キャラの初期化
+	CCharacter::Init(pfile);
+
+	// 位置設定
+	SetPos(INITIAL_POS);
+
+	// 向き設定
+	SetRot(D3DXVECTOR3(0.0f, 3.14f, 0.0f));
+
+	m_GolePos = GET_POS_OTAKU;
+
+	m_nNumPresent = -1;
+
+	m_pBillboard[0] = CBillboard::Create(INITIAL_POS + BILLBOARD_OFFSET, 100.0f, 100.0f);
+	m_pBillboard[0]->BindTexture(pTexture->Regist("data\\TEXTURE\\speech\\speech.png"));
+
+	m_pBillboard[1] = CBillboard::Create(INITIAL_POS + BILLBOARD_OFFSET, 100.0f, 0.0f);
+	m_pBillboard[1]->BindTexture(pTexture->Regist(m_apFilenameOtaku[rand() % 3]));
+
+	return S_OK;
+}
+
+//========================================
+// 激おこ処理
+//========================================
+void CEnemyOtaku::Angry()
+{
+	// 位置取得
+	D3DXVECTOR3 pos = GetPos();
+
+	D3DXVECTOR3 vecLane = LANE_POS[m_nNumLane] - pos;
+	if (D3DXVec3Length(&vecLane) < 150.0f)
+	{
+		
+	}
 }

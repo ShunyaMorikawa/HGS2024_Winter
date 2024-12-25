@@ -50,7 +50,7 @@ CBillboard *CBillboard::Create(const D3DXVECTOR3& pos, float fwidth, float fheig
 	if (pBillboard == nullptr)
 	{//pBillboardがnullptrの時
 		//ビルボード生成
-		pBillboard = new CBillboard;
+		pBillboard = new CBillboard(7);
 
 		//初期化
 		pBillboard->Init();
