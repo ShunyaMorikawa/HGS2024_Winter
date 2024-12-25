@@ -93,7 +93,7 @@ void CEnemyManager::Update(void)
 {
 	m_nCntEnemy++;
 
-	if (m_nCntEnemy < 120) { return; }
+	if (m_nCntEnemy < 30) { return; }
 
 	int nLane = rand() % 3;
 
@@ -102,8 +102,17 @@ void CEnemyManager::Update(void)
 
 	m_nCntEnemy = 0;
 
-	// エネミー生成
-	CEnemy* pEnemy = CEnemy::Create(Constance::ENEMY_TXT);
+	CEnemy* pEnemy;
+	if (rand() % 100 > 75)
+	{
+		// エネミー生成
+		pEnemy = CEnemyOtaku::Create(Constance::OTAKU_TXT[rand() % 3]);
+	}
+	else
+	{
+		// エネミー生成
+		pEnemy = CEnemyChild::Create(Constance::ENEMY_TXT);
+	}
 
 	// 敵に情報を設定
 	if (listEnemy[nLane].empty())
