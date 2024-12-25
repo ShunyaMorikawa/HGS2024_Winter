@@ -15,7 +15,7 @@
 //========================================
 namespace
 {
-	const char* FIELD_TEX = "data\\texture\\soil.jpg";	// 地面のテクスチャ
+	const char* FIELD_TEX = "data\\texture\\snow.jpg";	// 地面のテクスチャ
 }
 
 //========================================
