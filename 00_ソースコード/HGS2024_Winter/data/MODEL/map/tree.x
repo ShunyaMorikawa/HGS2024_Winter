@@ -465,7 +465,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\student\\Documents\\00_髙田_バックアップ\\ハッカソ\ン\\素材\\クリスマスツリー\\tree.jpg";
+    "data\\TEXTURE\\tree\\tree.jpg";
    }
   }
   Material {
