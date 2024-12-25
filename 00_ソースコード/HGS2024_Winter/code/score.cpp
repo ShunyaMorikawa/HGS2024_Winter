@@ -18,6 +18,8 @@ namespace
 	const float SCORE_POS_X = 640.0f;
 	const float SCORE_POS_Y = 320.0f;
 
+	const D3DXVECTOR3 POS = { 640.0f, 320.0f , 0.0f};
+
 	const std::string SCORE_TEXTURE = "data\\texture\\number.png";		//テクスチャへのパス
 }
 
@@ -51,7 +53,7 @@ CScore::~CScore()
 //========================================
 //スコア生成
 //========================================
-CScore* CScore::Create(const D3DXVECTOR3& pos)
+CScore* CScore::Create()
 {
 	//CEnemy型のポインタ
 	CScore* pScore = nullptr;
@@ -88,28 +90,28 @@ HRESULT CScore::Init(void)
 		{//nullptrの時
 			//スコアの生成
 			m_apNumber[nCnt] = CNumber::Create();
+		}
 
-			if (m_apNumber[nCnt] != nullptr)
-			{
-				//テクスチャ設定
-				m_apNumber[nCnt]->BindTexture(pTexture->Regist(SCORE_TEXTURE));
+		if (m_apNumber[nCnt] != nullptr)
+		{
+			//テクスチャ設定
+			m_apNumber[nCnt]->BindTexture(pTexture->Regist(SCORE_TEXTURE));
 
-				//スコアのサイズ
-				m_apNumber[nCnt]->SetSize(60.0f, 60.0f);
+			//スコアのサイズ
+			m_apNumber[nCnt]->SetSize(60.0f, 60.0f);
 
-				D3DXVECTOR3 posNum = pos;
+			D3DXVECTOR3 posNum = pos + POS;
 
-				//桁数の間隔
-				posNum.x += nCnt * 60.0f;
+			//桁数の間隔
+			posNum.x += nCnt * 60.0f;
 
-				//位置の設定
-				m_apNumber[nCnt]->SetPos(D3DXVECTOR3(posNum.x - 70.0f, 35.0f, 0.0f));
-			}
+			//位置の設定
+			m_apNumber[nCnt]->SetPos(posNum);
 		}
 	}
 
-	//スコアの値
-	m_Score = 0;
+	// スコアの初期化
+	SetScore(0);
 
 	//成功を返す
 	return S_OK;
