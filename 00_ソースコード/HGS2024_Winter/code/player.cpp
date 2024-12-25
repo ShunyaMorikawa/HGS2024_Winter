@@ -131,6 +131,15 @@ HRESULT CPlayer::Init(std::string pfile)
 	// 向き設定
 	SetRot(INITIAL_ROT);
 
+	// モーション情報取得
+	CMotion* pMotion = GetMotion();
+	if (pMotion != nullptr)
+	{
+		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
+	}
+
+	
+
 	return S_OK;
 }
 
@@ -181,6 +190,27 @@ void CPlayer::Update(void)
 		// プレイヤー行動
 		Act(SPEED);
 		Present();
+	}
+
+	// モーション情報取得
+	CMotion* pMotion = GetMotion();
+	if (pMotion == nullptr)
+	{
+		return;
+	}
+
+	if (true)
+	{// 歩きモーション
+		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
+	}
+	else
+	{// 待機モーション
+		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
+	}
+
+	if (pMotion != nullptr)
+	{// モーション更新
+		pMotion->Update();
 	}
 
 #ifdef _DEBUG
