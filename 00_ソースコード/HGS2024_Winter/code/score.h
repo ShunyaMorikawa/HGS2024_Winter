@@ -1,46 +1,81 @@
-//========================================
+//=====================================
 //
-//シューティングアクション[score.h]
-//Author：森川駿弥
+// scoreヘッダー
+// Author:中村　陸
 //
-//========================================
+//=====================================
 #ifndef _SCORE_H_
 #define _SCORE_H_
+
 #include "main.h"
-#include "number.h"
+#include "object.h"
 
-//========================================
-//マクロ定義
-//========================================
-#define MAX_SCORE	(8)		//スコアの桁数
+//マクロ定義---------------------------
+#define MAX_PLACE (5)			//多重スクロール用背景の最大数
 
-//========================================
-//スコアクラス
-//========================================
+//列挙型定義---------------------------
+
+//クラス定義---------------------------
+class CNumber;
+class CObject;
 class CScore : public CObject
 {
-public:
-	CScore();	//コンストラクタ
-	~CScore();	//デストラクタ
+public:				//外部からアクセス可能
+
+	//コンストラクタ・デストラクタ
+	CScore(int nPriority);				//デフォルト
+	virtual ~CScore();
 
 	//メンバ関数
-	static CScore* Create();	//敵生成
+	virtual HRESULT Init(void);
+	virtual void Uninit(void);
+	virtual void Update(void);
+	virtual void Draw(void);
 
-	HRESULT Init(void);
-	void Uninit(void);
-	void Update(void);
-	void Draw(void);
+	void Set(D3DXVECTOR3 pos, D3DXVECTOR3 rot, float fWidth, float fHeight);
 
-	void SetScore(int nScore);
-	void AddScore(int nScore) { SetScore(m_Score + nScore); }
-	int GetScore(void) { return m_Score; }
+	void SetPos(D3DXVECTOR3 pos) { m_pos = pos; }
+	D3DXVECTOR3 GetPos(void) { return m_pos; }
+	void SetPosOld(D3DXVECTOR3 posOld) { m_posOld = posOld; }
+	D3DXVECTOR3 GetPosOld(void) { return m_posOld; }
+	void SetMove(D3DXVECTOR3 move) { m_move = move; }
+	D3DXVECTOR3 GetMove(void) { return m_move; }
+	void SetRot(D3DXVECTOR3 rot) { m_rot = rot; }
+	D3DXVECTOR3 GetRot(void) { return m_rot; }
+	void SetWidth(float fWidth) { m_fWidth = fWidth; }
+	float GetWidth(void) { return m_fWidth; }
+	void SetHeight(float fHeight) { m_fHeight = fHeight; }
+	float GetHeight(void) { return m_fHeight; }
 
-private:
+	void AddScore(int nScore) { m_nScore += nScore; }
+	void SetScore(int nScore) { m_nScore = nScore; }
+	int GetScore(void) { return m_nScore; }
+
+	//静的メンバ関数
+	static CScore* Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, float fWidth, float fHeight);
+
+	static int GetScoreResult(void) { return m_nScoreResult; }
+	static void SetScoreResult(int score) { m_nScoreResult = score; }
+
+protected:			//子ならアクセス可能(使わない)
+
+private:			//外部からアクセス不可能
+
+	//メンバ関数
+
 	//メンバ変数
-	static CNumber* m_apNumber[MAX_SCORE];		//CNumberの配列
-	int m_Score;		//スコアの値
-	int m_nIdxTexture;		//テクスチャの番号
-	int m_nPatternAnim;		//スコアパターンNo,
+	CNumber* m_apObject2D[MAX_PLACE];
+	D3DXVECTOR3 m_pos;
+	D3DXVECTOR3 m_posOld;
+	D3DXVECTOR3 m_move;
+	D3DXVECTOR3 m_rot;
+	float m_fWidth;
+	float m_fHeight;
+	float m_fHue;
+	int m_nScore;
+
+	//静的メンバ変数
+	static int m_nScoreResult;
 };
 
-#endif
+#endif // !_SCORE_H_

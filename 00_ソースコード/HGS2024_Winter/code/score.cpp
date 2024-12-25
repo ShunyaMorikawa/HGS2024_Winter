@@ -1,174 +1,153 @@
-//========================================
+//=====================================
 //
-//シューティングアクション[score.cpp]
-//Author：森川駿弥
+// 
+// Author:中村陸
 //
-//========================================
+//=====================================
 #include "score.h"
-#include "manager.h"
 #include "renderer.h"
-#include "texture.h"
-#include "debugproc.h"
+#include "manager.h"
+#include "object2D.h"
+#include "number.h"
+#include "useful.h"
 
-//========================================
-// 定数定義
-//========================================
-namespace
+//マクロ定義---------------------------
+
+//列挙型定義---------------------------
+
+//クラス定義---------------------------
+
+//構造体定義---------------------------
+
+//プロトタイプ宣言---------------------
+
+//静的メンバ変数宣言-------------------
+int CScore::m_nScoreResult = 0;
+
+//=====================================
+// コンストラクタ・デストラクタ
+//=====================================
+CScore::CScore(int nPriority = 6) : CObject(nPriority)
 {
-	const float SCORE_POS_X = 640.0f;
-	const float SCORE_POS_Y = 320.0f;
-
-	const D3DXVECTOR3 POS = { 640.0f, 320.0f , 0.0f};
-
-	const std::string SCORE_TEXTURE = "data\\texture\\number.png";		//テクスチャへのパス
+	m_nScore = 0;
+	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_posOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_fWidth = 0.0f;
+	m_fHeight = 0.0f;
+	m_fHue = 0.0f;
+	m_nScore = 0;
 }
 
-//========================================
-//静的メンバ変数
-//========================================
-CNumber* CScore::m_apNumber[] = {};
-
-//========================================
-//コンストラクタ
-//========================================
-CScore::CScore()
-{
-	m_Score = 0;			//スコアの値
-	m_nPatternAnim = 0;		//スコアパターンNo,
-
-	for (int nCnt = 0; nCnt < MAX_SCORE; nCnt++)
-	{
-		m_apNumber[nCnt] = nullptr;		//CNumberの配列
-	}
-}
-
-//========================================
-//デストラクタ
-//========================================
 CScore::~CScore()
 {
-
 }
 
-//========================================
-//スコア生成
-//========================================
-CScore* CScore::Create()
+//=====================================
+// 生成処理
+//=====================================
+CScore* CScore::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, float fWidth, float fHeight)
 {
-	//CEnemy型のポインタ
-	CScore* pScore = nullptr;
+	CScore* pScore;
 
-	if (pScore == nullptr)
-	{//pScoreがnullptrの時
-		//スコアの生成
-		pScore = new CScore;
+	//2Dオブジェクトの生成
+	pScore = new CScore();
+
+	if (pScore != NULL)
+	{
+		pScore->Set(pos, rot, fWidth, fHeight);
 
 		//初期化
-		pScore->Init();
-
-		//スコアの初期値
-		pScore->SetScore(0);
+		if (FAILED(pScore->Init()))
+		{
+			pScore->Release();
+		}
 	}
 
-	//ポインタを返す
 	return pScore;
 }
 
-//========================================
-//初期化
-//========================================
+//=====================================
+// ポリゴンの初期化処理
+//=====================================
 HRESULT CScore::Init(void)
 {
-	//テクスチャのポインタ
-	CTexture* pTexture = CManager::GetInstance()->GetTexture();
-
-	D3DXVECTOR3 pos = GetPos();
-
-	for (int nCnt = 0; nCnt < MAX_SCORE; nCnt++)
+	for (int nCnt = 0; nCnt < MAX_PLACE; nCnt++)
 	{
-		if (m_apNumber[nCnt] == nullptr)
-		{//nullptrの時
-			//スコアの生成
-			m_apNumber[nCnt] = CNumber::Create();
-		}
+		m_apObject2D[nCnt] = CNumber::Create();
 
-		if (m_apNumber[nCnt] != nullptr)
+		if (m_apObject2D[nCnt] != NULL)
 		{
-			//テクスチャ設定
-			m_apNumber[nCnt]->BindTexture(pTexture->Regist(SCORE_TEXTURE));
+			if (FAILED(m_apObject2D[nCnt]->Init()))
+			{
+				return E_FAIL;
+			}
 
-			//スコアのサイズ
-			m_apNumber[nCnt]->SetSize(60.0f, 60.0f);
-
-			D3DXVECTOR3 posNum = pos + POS;
-
-			//桁数の間隔
-			posNum.x += nCnt * 60.0f;
-
-			//位置の設定
-			m_apNumber[nCnt]->SetPos(posNum);
+			m_apObject2D[nCnt]->SetPos(D3DXVECTOR3(m_pos.x - (m_fWidth + 5.0f) * nCnt, m_pos.y, 0.0f));
+			m_apObject2D[nCnt]->SetRot(m_rot);
+			m_apObject2D[nCnt]->SetSize(m_fWidth, m_fHeight);
+			m_apObject2D[nCnt]->SetNumber(0);
 		}
 	}
 
-	// スコアの初期化
-	SetScore(0);
-
-	//成功を返す
 	return S_OK;
 }
 
-//========================================
-//終了
-//========================================
+//=====================================
+// ポリゴンの終了処理
+//=====================================
 void CScore::Uninit(void)
 {
-	for (int nCnt = 0; nCnt < MAX_SCORE; nCnt++)
+	for (int nCnt = 0; nCnt < MAX_PLACE; nCnt++)
 	{
-		if (m_apNumber[nCnt] != nullptr)
-		{//nullptrじゃない時
-			m_apNumber[nCnt]->Uninit();
-			m_apNumber[nCnt] = nullptr;
+		if (m_apObject2D[nCnt] != NULL)
+		{
+			m_apObject2D[nCnt]->Uninit();
 		}
 	}
 
-	//自分自身の破棄
-	CObject::Release();
+	Release();
 }
 
-//========================================
-//更新
-//========================================
+//=====================================
+// ポリゴンの更新処理
+//=====================================
 void CScore::Update(void)
 {
+	m_posOld = m_pos;
+
+	if (m_nScore < 0)
+	{
+		m_nScore = 0;
+	}
+
+	for (int nCnt = 0; nCnt < MAX_PLACE; nCnt++)
+	{
+		if (m_apObject2D[nCnt] != NULL)
+		{
+			D3DXVECTOR2* texPos = NULL;
+			m_apObject2D[nCnt]->SetNumber(m_nScore % (int)pow(10, nCnt + 1) / (int)pow(10, nCnt));
+
+			m_apObject2D[nCnt]->Update();
+		}
+	}
 }
 
-//========================================
-//描画
-//========================================
+//=====================================
+// ポリゴンの描画処理
+//=====================================
 void CScore::Draw(void)
 {
+
 }
 
-//========================================
-//スコア設定
-//========================================
-void CScore::SetScore(int nScore)
+//=====================================
+// ポリゴンの設定処理
+//=====================================
+void CScore::Set(D3DXVECTOR3 pos, D3DXVECTOR3 rot, float fWidth, float fHeight)
 {
-	m_Score = nScore;
-
-	int aTexU[MAX_SCORE];  //各桁の数字を格納
-
-	aTexU[0] = m_Score % 100000000 / 10000000;
-	aTexU[1] = m_Score % 10000000 / 1000000;
-	aTexU[2] = m_Score % 1000000 / 100000;
-	aTexU[3] = m_Score % 100000 / 10000;
-	aTexU[4] = m_Score % 10000 / 1000;
-	aTexU[5] = m_Score % 1000 / 100;
-	aTexU[6] = m_Score % 100 / 10;
-	aTexU[7] = m_Score % 10 / 1;
-
-	for (int nCnt = 0; nCnt < MAX_SCORE; nCnt++)
-	{//桁数分回す
-		m_apNumber[nCnt]->SetVertexAnim(10, aTexU[nCnt]);
-	}
+	m_pos = pos;
+	m_rot = rot;
+	m_fWidth = fWidth;
+	m_fHeight = fHeight;
 }

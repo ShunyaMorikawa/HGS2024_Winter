@@ -299,7 +299,7 @@ void CEnemy::Hit(int nPresent)
 
 	if (m_nNumPresent == nPresent)
 	{
-		
+
 	}
 	else
 	{
