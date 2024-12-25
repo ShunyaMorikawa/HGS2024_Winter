@@ -27,6 +27,7 @@ class CGauge;
 class CWall;
 class CMapObject;
 class CEnemyManager;
+class CScore;
 
 //========================================
 // 定数定義
@@ -54,6 +55,8 @@ public:
 	void Draw(void);
 	void PauseState(bool bPauseState) { m_bPause = bPauseState; }	//ポーズ状態かどうか
 
+	CScore* GetScore() { return m_pScore; }
+
 	static CGame* GetInstance();		// ゲームマネージャーの情報
 	
 private:
@@ -68,7 +71,7 @@ private:
 	CFade* m_pFade;				// フェードのポインタ
 	CObject2D* m_pObj2D;		// オブジェクト2Dのポインタ
 	CEnemyManager* m_pEnemyManager;	// 敵マネージャーのポインタ
-
+	CScore* m_pScore;
 	
 };
 

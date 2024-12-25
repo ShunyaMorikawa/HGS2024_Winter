@@ -1,41 +1,58 @@
-//========================================
+//=====================================
 //
-// ナンバー管理[number.h]
-// Author：森川駿弥
+// numberヘッダー
+// Author:中村　陸
 //
-//========================================
+//=====================================
 #ifndef _NUMBER_H_
 #define _NUMBER_H_
 
 #include "main.h"
 #include "object2D.h"
 
-//========================================
-// ナンバークラス
-//========================================
+//マクロ定義---------------------------
+
+//列挙型定義---------------------------
+
+// 前方宣言----------------------------
+class CTexture;
+
+//クラス定義---------------------------
 class CNumber : public CObject2D
 {
-public:
-	CNumber();		//コンストラクタ
-	~CNumber();		//デストラクタ
+public:				//外部からアクセス可能
 
-		//メンバ関数
-	static CNumber* Create(void);	//プレイヤー生成
+	//コンストラクタ・デストラクタ
+	CNumber(int nPriority);				//デフォルト
+	~CNumber();
 
-	HRESULT Init(void);		//初期化
-	void Uninit(void);		//終了
-	void Update(void);		//更新
-	void Draw(void);		//描画
+	//メンバ関数
+	HRESULT Init(void);
+	void Uninit(void);
+	void Update(void);
+	void Draw(void);
 
-	void SetNumber(const int nNum) { m_nNumber = nNum; } // 数値の設定
+	int GetNumber(void) { return m_nNumber; }
+	void SetNumber(int nNumber) { m_nNumber = nNumber; }
 
-private:
+	//静的メンバ関数
+	static CNumber* Create(void);
 
-	// メンバ関数
-	void CalcUV(); // テクスチャ座標の計算
+protected:			//子ならアクセス可能(使わない)
 
-	// メンバ変数
-	int m_nNumber; // 自身の数字
+private:			//外部からアクセス不可能
+
+	//メンバ関数
+
+	//メンバ変数
+
+	//静的メンバ変数
+	int m_nNumber;
+
 };
 
-#endif
+//構造体定義---------------------------
+
+//プロトタイプ宣言---------------------
+
+#endif // !_NUMBER_H_
