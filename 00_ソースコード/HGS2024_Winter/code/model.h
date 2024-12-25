@@ -35,6 +35,9 @@ public:
 
 	static CModel *Create(const char *pFilename);	//オブジェクト生成
 
+	// マテリアルの取得
+	LPD3DXBUFFER GetBuffMat() { return m_pBuffMat; }
+
 	// 親モデルの設定
 	void SetParent(CModel* pModel) { m_pParent = pModel; }
 

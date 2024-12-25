@@ -50,8 +50,6 @@ public:
 
 	float GetRadius() { return m_fRadius; }		// 半径取得
 
-	static CEnemy* GetInstance() { return m_pEnemy; }	// 敵の情報取得
-
 private:
 	void NockBack();
 	void Motion();
@@ -71,8 +69,6 @@ private:
 	ENEMYSTATE m_eState;	// 状態
 
 	CGauge* m_pGauge;	// ゲージのポインタ
-
-	static CEnemy* m_pEnemy;	// 自身のポインタ
 };
 
 #endif
