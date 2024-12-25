@@ -56,9 +56,9 @@ namespace
 
 	const D3DXVECTOR3 PLAYER_POS[MAX_POS] =
 	{ 
-		{ 50.0f, 0.0f, 200.0f },
-		{ 50.0f, 0.0f, 0.0f },
-		{ 50.0f, 0.0f, -200.0f },
+		{ -200.0f, 0.0f, 400.0f },
+		{ 0.0f, 0.0f, 400.0f },
+		{ 200.0f, 0.0f, 400.0f },
 	};// プレイヤーの目標位置
 }
 
@@ -129,12 +129,6 @@ HRESULT CPlayer::Init(std::string pfile)
 
 	// 向き設定
 	SetRot(INITIAL_ROT);
-
-	// 位置設定
-	m_pGauge->SetPos(GAUGE_POS);
-
-	// サイズ設定
-	m_pGauge->SetSize(GAUGE_WIDTH, GAUGE_HEIGHT);
 
 	return S_OK;
 }
@@ -260,7 +254,7 @@ void CPlayer::Act(float fSpeed)
 
 	if (pInputKeyboard->GetPress(DIK_A) == true
 		|| pInputPad->GetPress(CInputPad::BUTTON_LEFT, 0) == true
-		|| pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK, 0) > 0 || pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK, 0) > 0)
+		|| pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK, 0) < 0)
 	{//Aが押された
 
 		m_nMoveCounter++;
@@ -273,7 +267,7 @@ void CPlayer::Act(float fSpeed)
 		}
 	}
 	else if (pInputKeyboard->GetPress(DIK_D) == true
-		|| pInputPad->GetPress(CInputPad::BUTTON_LEFT, 0) == true
+		|| pInputPad->GetPress(CInputPad::BUTTON_RIGHT, 0) == true
 		|| pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK, 0) > 0)
 	{//Dが押された
 
@@ -285,6 +279,10 @@ void CPlayer::Act(float fSpeed)
 
 			m_nPosCounter += 2;
 		}
+	}
+	else
+	{
+		m_nMoveCounter = 9;
 	}
 
 	{//位置を更新
