@@ -29,7 +29,7 @@ namespace
 {
 const int SCREEN_WIDTH = 1280;	// ウィンドウの幅
 const int SCREEN_HEIGHT = 720;	// ウィンドウの高さ
-const int MAX_PARTS = 15;	// //プレイヤーモデル(パーツ)の最大数
+const int MAX_PARTS = 32;	// //プレイヤーモデル(パーツ)の最大数
 }
 
 //========================================
