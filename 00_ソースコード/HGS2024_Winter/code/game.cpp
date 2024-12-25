@@ -123,8 +123,8 @@ HRESULT CGame::Init(void)
 	CWall::Create(D3DXVECTOR3(Constance::WALL_POS, Constance::WALL_POS_Y, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f, -D3DX_PI * 0.5f, 0.0f));
 	CWall::Create(D3DXVECTOR3(-Constance::WALL_POS, Constance::WALL_POS_Y, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f, D3DX_PI * 0.5f, 0.0f));
 
-	CModel* pModel = CModel::Create("data\\MODEL\\stage\\table.x");
-	pModel->SetPos({ 0.0f, 0.0f, 0.0f });
+	//CModel* pModel = CModel::Create("data\\MODEL\\stage\\table.x");
+	//pModel->SetPos({ 0.0f, 0.0f, 0.0f });
 
 	// ÉXÉRÉAê∂ê¨
 	m_pScore = CScore::Create(D3DXVECTOR3(410.0f, 650.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 80.0f, 50.0f);
