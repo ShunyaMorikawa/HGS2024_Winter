@@ -190,22 +190,11 @@ void CBullet::CollisionPlayer(const D3DXVECTOR3& pos)
 	// プレイヤーの位置
 	D3DXVECTOR3 posPlayer = pPlayer->GetPos();
 
-	// 半径
-	float radiusPlayer = pPlayer->GetRadius();
-
 	// ベクトルを求める
 	D3DXVECTOR3 vec = posPlayer - pos;
 
 	//ベクトル代入
 	fLength = D3DXVec3Length(&vec);
-
-	if (fLength <= radiusPlayer + fRadius)
-	{// プレイヤーに当たった
-		Uninit();
-
-		// 体力消費
-		pPlayer->Hit(DAMAGE);
-	}
 }
 
 //===========================================

@@ -49,10 +49,6 @@ public:
 	void Draw();
 	void Hit(int nLife);
 
-	float GetRadius() { return m_fRadius; }		// 半径取得
-
-	int GetLife() { return m_nLife; }			// 体力取得
-
 	// 状態取得・設定
 	PLAYERSTATE GetState() { return m_eState; }
 	void SetState(PLAYERSTATE nState) { m_eState = nState; }
@@ -61,38 +57,22 @@ public:
 
 	void CollisionArena();
 
-	void CollisionEnemy(const D3DXVECTOR3& pos);
-
 	// 自身の情報
 	static CPlayer* GetInstance() { return m_pPlayer; }
 
 private:
 	void Act(float fSpeed);
-	void Attack();
+	void Present();
 	void Motion();
-	void CollisionEnemy(int nDamage);
-	void NockBack();
-
-	void LockOn();
 	void DestRot();
 
 	//メンバ変数
 	int m_apNumModel;		// モデル(パーツ)の総数
-	int m_nLife;			// 体力
 	int m_nOldMotion;		// 前回のモーション
-	int m_WalkCounter;		// 歩行時のカウンター
+	int m_nMoveCounter;		// 移動のカウンター
+	int m_nPosCounter;		// 移動位置のカウンター
 
-	float m_fRadius;		// 半径
-	float m_fCoolDown;		// クールタイム経過時間
 	float m_fDeltaTime;		// デルタタイム
-
-	bool m_bJump;			// ジャンプ
-	bool m_bMove;			// 移動
-	bool m_bWait;			// 待機
-	bool m_bMowingdown;		// 攻撃
-	bool m_bCutdown;		// 切り下ろし
-	bool m_bStrongAttack;	// 強攻撃
-	bool m_IsLock;			// ロックオンフラグ
 
 	PLAYERSTATE m_eState;	// 状態
 
