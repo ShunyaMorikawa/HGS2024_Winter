@@ -131,6 +131,15 @@ HRESULT CPlayer::Init(std::string pfile)
 	// 向き設定
 	SetRot(INITIAL_ROT);
 
+	// モーション情報取得
+	CMotion* pMotion = GetMotion();
+	if (pMotion != nullptr)
+	{
+		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
+	}
+
+	
+
 	return S_OK;
 }
 
@@ -181,6 +190,27 @@ void CPlayer::Update(void)
 		// プレイヤー行動
 		Act(SPEED);
 		Present();
+	}
+
+	// モーション情報取得
+	CMotion* pMotion = GetMotion();
+	if (pMotion == nullptr)
+	{
+		return;
+	}
+
+	if (true)
+	{// 歩きモーション
+		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
+	}
+	else
+	{// 待機モーション
+		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
+	}
+
+	if (pMotion != nullptr)
+	{// モーション更新
+		pMotion->Update();
 	}
 
 #ifdef _DEBUG
@@ -348,11 +378,11 @@ void CPlayer::Present()
 
 		m_nNumPresent = 2;
 
-		//マテリアルのデータのポイントを取得
-		pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
+		////マテリアルのデータのポイントを取得
+		//pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
 
-		pMat[1].MatD3D.Diffuse = D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f);
-		pMat[1].MatD3D.Emissive = D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f);
+		//pMat[1].MatD3D.Diffuse = D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f);
+		//pMat[1].MatD3D.Emissive = D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f);
 
 		bPresent = true;
 
@@ -364,11 +394,11 @@ void CPlayer::Present()
 
 		m_nNumPresent = 0;
 
-		//マテリアルのデータのポイントを取得
-		pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
+		////マテリアルのデータのポイントを取得
+		//pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
 
-		pMat[1].MatD3D.Diffuse = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
-		pMat[1].MatD3D.Emissive = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
+		//pMat[1].MatD3D.Diffuse = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
+		//pMat[1].MatD3D.Emissive = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
 
 		bPresent = true;
 
@@ -380,11 +410,11 @@ void CPlayer::Present()
 
 		m_nNumPresent = 1;
 
-		//マテリアルのデータのポイントを取得
-		pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
+		////マテリアルのデータのポイントを取得
+		//pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
 
-		pMat[1].MatD3D.Diffuse = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
-		pMat[1].MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
+		//pMat[1].MatD3D.Diffuse = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
+		//pMat[1].MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
 
 		bPresent = true;
 
@@ -396,11 +426,11 @@ void CPlayer::Present()
 
 		m_nNumPresent = -1;
 
-		//マテリアルのデータのポイントを取得
-		pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
+		////マテリアルのデータのポイントを取得
+		//pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
 
-		pMat[1].MatD3D.Diffuse = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
-		pMat[1].MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+		//pMat[1].MatD3D.Diffuse = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+		//pMat[1].MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
 
 		bPresent = true;
 
