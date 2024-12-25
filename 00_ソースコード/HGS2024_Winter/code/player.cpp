@@ -348,11 +348,11 @@ void CPlayer::Present()
 
 		m_nNumPresent = 2;
 
-		//マテリアルのデータのポイントを取得
-		pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
+		////マテリアルのデータのポイントを取得
+		//pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
 
-		pMat[1].MatD3D.Diffuse = D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f);
-		pMat[1].MatD3D.Emissive = D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f);
+		//pMat[1].MatD3D.Diffuse = D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f);
+		//pMat[1].MatD3D.Emissive = D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f);
 
 		bPresent = true;
 
@@ -364,11 +364,11 @@ void CPlayer::Present()
 
 		m_nNumPresent = 0;
 
-		//マテリアルのデータのポイントを取得
-		pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
+		////マテリアルのデータのポイントを取得
+		//pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
 
-		pMat[1].MatD3D.Diffuse = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
-		pMat[1].MatD3D.Emissive = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
+		//pMat[1].MatD3D.Diffuse = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
+		//pMat[1].MatD3D.Emissive = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
 
 		bPresent = true;
 
@@ -380,11 +380,11 @@ void CPlayer::Present()
 
 		m_nNumPresent = 1;
 
-		//マテリアルのデータのポイントを取得
-		pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
+		////マテリアルのデータのポイントを取得
+		//pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
 
-		pMat[1].MatD3D.Diffuse = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
-		pMat[1].MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
+		//pMat[1].MatD3D.Diffuse = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
+		//pMat[1].MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
 
 		bPresent = true;
 
@@ -396,11 +396,11 @@ void CPlayer::Present()
 
 		m_nNumPresent = -1;
 
-		//マテリアルのデータのポイントを取得
-		pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
+		////マテリアルのデータのポイントを取得
+		//pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
 
-		pMat[1].MatD3D.Diffuse = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
-		pMat[1].MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+		//pMat[1].MatD3D.Diffuse = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+		//pMat[1].MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
 
 		bPresent = true;
 
