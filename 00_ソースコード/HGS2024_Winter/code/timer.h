@@ -51,6 +51,10 @@ public:				//外部からアクセス可能
 	void SetScore(int nScore) { m_nScore = nScore; }
 	int GetScore(void) { return m_nScore; }
 
+	int GetTimer(void) { return m_nTimer; }
+
+	void SetStart(bool bStart) { m_bStart = bStart; }
+
 	//静的メンバ関数
 	static CTimer* Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, float fWidth, float fHeight);
 
@@ -76,6 +80,8 @@ private:			//外部からアクセス不可能
 
 	int m_nTimer;
 	int m_nTimeCounter;
+
+	bool m_bStart;
 
 	//静的メンバ変数
 	static int m_nScoreResult;

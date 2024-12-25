@@ -67,6 +67,7 @@ public:
 	void PauseState(bool bPauseState) { m_bPause = bPauseState; }	//ポーズ状態かどうか
 
 	CScore* GetScore() { return m_pScore; }
+	CTimer* GetTimer() { return m_pTime; }
 	STATE GetState() { return m_state; }
 
 	static CGame* GetInstance();		// ゲームマネージャーの情報
@@ -85,7 +86,7 @@ private:
 	CEnemyManager* m_pEnemyManager;	// 敵マネージャーのポインタ
 	CScore* m_pScore;
 	CTimer* m_pTime;
-	
+	CObject2D* m_pObject2D;
 	STATE m_state;
 };
 
