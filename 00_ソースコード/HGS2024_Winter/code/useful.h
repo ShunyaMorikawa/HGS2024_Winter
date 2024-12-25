@@ -51,9 +51,9 @@ namespace Constance
 
 	const std::string OTAKU_TXT[3] =
 	{
-		"data//FILE//enemy.txt",
-		"data//FILE//enemy.txt",
-		"data//FILE//enemy.txt",
+		"data//FILE//motion_otaku00.txt",
+		"data//FILE//motion_otaku01.txt",
+		"data//FILE//motion_otaku02.txt",
 	};
 }
 
