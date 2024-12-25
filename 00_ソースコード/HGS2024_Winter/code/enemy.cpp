@@ -463,7 +463,6 @@ void CEnemy::CollisionPlayer(int nDamage)
 		// プレイヤーの位置・移動量・半径・状態取得
 		D3DXVECTOR3 posPlayer = pPlayer->GetPos();
 		D3DXVECTOR3 movePlayer = pPlayer->GetMove();
-		float radiusEnemy = pPlayer->GetRadius();
 		int statePlayer = pPlayer->GetState();
 
 		// ベクトルを求める
@@ -471,14 +470,6 @@ void CEnemy::CollisionPlayer(int nDamage)
 
 		// ベクトル代入
 		float fLength = D3DXVec3Length(&vec);
-
-		if (fLength <= radiusEnemy + fRadius)
-		{// ヒット
-			pPlayer->Hit(nDamage);
-
-			// ノックバック
-			NockBack();
-		}
 
 		if (statePlayer == CPlayer::STATE_DAMAGE)
 		{// ダメージ状態の時
