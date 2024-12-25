@@ -19,6 +19,7 @@
 #include "debugproc.h"
 #include "texture.h"
 #include "useful.h"
+#include "enemy_manager.h"
 
 //========================================
 //静的メンバ変数
@@ -95,8 +96,8 @@ HRESULT CGame::Init(void)
 	// プレイヤー生成
 	CPlayer::Create(Constance::PLAYER_TXT);
 
-	// エネミー生成
-	CEnemy::Create(Constance::ENEMY_TXT);
+	m_pEnemyManager = CEnemyManager::GetInstance();
+	m_pEnemyManager->Init();
 
 	// フィールド生成
 	CField::Create();
@@ -121,6 +122,8 @@ void CGame::Uninit(void)
 		m_pObj2D = nullptr;
 	}
 
+	m_pEnemyManager->Release();
+	
 	// サウンド情報取得
 	CSound* pSound = CManager::GetInstance()->GetSound();
 
@@ -145,8 +148,7 @@ void CGame::Update(void)
 	// プレイヤーの情報取得
 	CPlayer* pPlayer = CPlayer::GetInstance();
 
-	// 敵の情報取得
-	CEnemy* pEnemy = CEnemy::GetInstance();
+	m_pEnemyManager->Update();
 
 	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true)
 	{// 画面遷移(フェード)

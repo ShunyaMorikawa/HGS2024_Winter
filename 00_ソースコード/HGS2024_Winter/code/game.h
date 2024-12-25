@@ -26,6 +26,7 @@ class CFade;
 class CGauge;
 class CWall;
 class CMapObject;
+class CEnemyManager;
 
 //========================================
 // 定数定義
@@ -66,6 +67,7 @@ private:
 	CIdxMeshField *m_pIdxMesh;	// メッシュフィールドのポインタ
 	CFade* m_pFade;				// フェードのポインタ
 	CObject2D* m_pObj2D;		// オブジェクト2Dのポインタ
+	CEnemyManager* m_pEnemyManager;	// 敵マネージャーのポインタ
 };
 
 #endif
