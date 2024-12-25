@@ -205,7 +205,7 @@ void CGame::Update(void)
 			m_pObject2D = CObject2D::Create();
 			m_pObject2D->SetPos(D3DXVECTOR3(640.0f, 360.0f, 0.0f));
 			m_pObject2D->SetSize(960.0f, 540.0f);
-			m_pObject2D->BindTexture(pTexture->Regist("data\\TEXTURE\\title\\title_logo.png"));
+			m_pObject2D->BindTexture(pTexture->Regist("data\\TEXTURE\\start.png"));
 			m_state = STATE_START;
 
 			break;
@@ -224,7 +224,7 @@ void CGame::Update(void)
 				m_pObject2D = CObject2D::Create();
 				m_pObject2D->SetPos(D3DXVECTOR3(640.0f, 360.0f, 0.0f));
 				m_pObject2D->SetSize(960.0f, 540.0f);
-				m_pObject2D->BindTexture(pTexture->Regist("data\\TEXTURE\\title\\title_logo.png"));
+				m_pObject2D->BindTexture(pTexture->Regist("data\\TEXTURE\\finish.png"));
 
 				CScore::SetScoreResult(m_pScore->GetScore());
 

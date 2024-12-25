@@ -138,12 +138,12 @@ void CTimer::Update(void)
 	--m_nTimer;
 	++m_nTimeCounter;
 
-	if (m_nTimer < 0)
+	if (m_nTimer <= 0)
 	{
 		m_nTimer = 0;
 	}
 
-	if (m_nTimeCounter > 60)
+	if (m_nTimeCounter >= 60)
 	{
 		AddScore(-1);
 
