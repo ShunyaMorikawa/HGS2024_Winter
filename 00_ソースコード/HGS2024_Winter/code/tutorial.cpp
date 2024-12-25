@@ -29,8 +29,8 @@ CTutorial* CTutorial::m_pTutorial = nullptr;		// ゲームのポインタ
 //========================================
 namespace
 {
-	const std::string TUTORIAL_TEX = "data\\texture\\tutorial_00.png";
-	const std::string TUTORIAL_SECOND_TEX = "data\\texture\\tutorial_01.png";
+	const std::string TUTORIAL_TEX = "data\\texture\\tutorial\\tutorial00.jpg";
+	const std::string TUTORIAL_SECOND_TEX = "data\\texture\\tutorial\\tutorial01.jpg";
 }
 
 //=======================================
