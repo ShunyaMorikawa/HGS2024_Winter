@@ -103,15 +103,6 @@ HRESULT CEnemy::Init(std::string pfile)
 	// 半径
 	m_fRadius = RADIUS;
 
-	// ゲージ生成
-	m_pGauge = CGauge::Create(m_nLife);
-
-	// 位置設定
-	m_pGauge->SetPos(GAUGE_POS);
-
-	// サイズ設定
-	m_pGauge->SetSize(GAUGE_SIZE, GAUGE_SIZE);
-
 	return S_OK;
 }
 
@@ -120,12 +111,6 @@ HRESULT CEnemy::Init(std::string pfile)
 //========================================
 void CEnemy::Uninit(void)
 {
-	if (m_pGauge != nullptr)
-	{// ゲージが使用されていた場合
-		m_pGauge->Uninit();
-		m_pGauge = nullptr;
-	}
-
 	// 終了
 	CCharacter::Uninit();
 }
@@ -200,12 +185,6 @@ void CEnemy::Update(void)
 		move.y = 0.0f;
 	}
 	
-	if (m_pGauge != nullptr)
-	{
-		// ゲージに体力設定
-		m_pGauge->SetLife(m_nLife);
-	}
-
 	// 向き設定
 	SetRot(rot);
 
