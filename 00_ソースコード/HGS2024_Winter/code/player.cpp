@@ -77,7 +77,6 @@ m_eState		(STATE_NONE),	// 状態
 m_fDeltaTime	(0.0f),			// デルタタイム
 m_nMoveCounter		(0),
 m_pEffect		(nullptr),		// エフェクトのポインタ
-m_pGauge		(nullptr),		// ゲージのポインタ
 m_pMarker		(nullptr)		// ロックオンマーカー表示
 {//値をクリア
 	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデル情報
@@ -143,12 +142,6 @@ void CPlayer::Uninit(void)
 
 	// サウンド停止
 	pSound->Stop();
-
-	if (m_pGauge != nullptr)
-	{// ゲージが使用されていた場合
-		m_pGauge->Uninit();
-		m_pGauge = nullptr;
-	}
 
 	// 終了
 	CCharacter::Uninit();
