@@ -124,7 +124,7 @@ HRESULT CTitle::Init(void)
 	m_pObject2D->BindTexture(pTexture->Regist("data\\TEXTURE\\title\\title_logo.png"));
 
 	// エンター生成
-	m_pEnter = CPress_Enter::Create(D3DXVECTOR3(1000.0f, 600.0f, 0.0f));
+	m_pEnter = CPress_Enter::Create(D3DXVECTOR3(1180.0f, 620.0f, 0.0f));
 
 	pSound->PlaySound(CSound::SOUND_LABEL_BGM_TITLE);
 
@@ -142,6 +142,10 @@ void CTitle::Uninit(void)
 
 	// サウンド停止
 	pSound->Stop();
+
+	m_pObject2D = nullptr;
+
+	m_pEnter = nullptr;
 
 	if (m_pTitle != nullptr)
 	{//モード破棄

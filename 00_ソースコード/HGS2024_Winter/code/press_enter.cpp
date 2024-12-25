@@ -140,7 +140,7 @@ CPress_Enter * CPress_Enter::Create(void)
 
 	//テクスチャ付与
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
-	pEnter->BindTexture(pTexture->Regist("data\\TEXTURE\\PressEnter00.png"));
+	pEnter->BindTexture(pTexture->Regist("data\\TEXTURE\\title\\press_enter.jpg"));
 
 	return pEnter;
 }
@@ -158,7 +158,7 @@ CPress_Enter * CPress_Enter::Create(const D3DXVECTOR3 pos)
 	
 		//テクスチャ付与
 		CTexture* pTexture = CManager::GetInstance()->GetTexture();
-		pEnter->BindTexture(pTexture->Regist("data\\TEXTURE\\PressEnter00.png"));
+		pEnter->BindTexture(pTexture->Regist("data\\TEXTURE\\title\\press_enter.jpg"));
 	}
 	else
 	{
