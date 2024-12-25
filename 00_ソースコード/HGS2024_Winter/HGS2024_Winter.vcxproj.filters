@@ -34,6 +34,9 @@
     <Filter Include="ソース ファイル\character\player">
       <UniqueIdentifier>{c30e1570-2bc6-45cd-b3ee-005a003cb8d1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\ui">
+      <UniqueIdentifier>{ecb8f2d8-ef35-4d9a-8b80-1429875819c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\game.cpp">
@@ -159,6 +162,9 @@
     <ClCompile Include="code\timer.cpp">
       <Filter>ソース ファイル\system</Filter>
     </ClCompile>
+    <ClCompile Include="code\press_enter.cpp">
+      <Filter>ソース ファイル\ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\game.h">
@@ -283,6 +289,9 @@
     </ClInclude>
     <ClInclude Include="code\timer.h">
       <Filter>ソース ファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="code\press_enter.h">
+      <Filter>ソース ファイル\ui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

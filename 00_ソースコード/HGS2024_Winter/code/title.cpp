@@ -17,6 +17,7 @@
 #include "titleplayer.h"
 #include "useful.h"
 #include "debugproc.h"
+#include "press_enter.h"
 
 //========================================
 //静的メンバ変数
@@ -43,8 +44,11 @@ namespace
 //=======================================
 //コンストラクタ
 //=======================================
-CTitle::CTitle()
+CTitle::CTitle() :
+	m_pObject2D(nullptr),
+	m_pEnter(nullptr)
 {
+
 }
 
 //=======================================
@@ -52,6 +56,7 @@ CTitle::CTitle()
 //=======================================
 CTitle::~CTitle()
 {
+
 }
 
 //=======================================
@@ -117,6 +122,9 @@ HRESULT CTitle::Init(void)
 	m_pObject2D->SetPos(D3DXVECTOR3(640.0f, 300.0f, 0.0f));
 	m_pObject2D->SetSize(960.0f, 540.0f);
 	m_pObject2D->BindTexture(pTexture->Regist("data\\TEXTURE\\title\\title_logo.png"));
+
+	// エンター生成
+	m_pEnter = CPress_Enter::Create(D3DXVECTOR3(1000.0f, 600.0f, 0.0f));
 
 	pSound->PlaySound(CSound::SOUND_LABEL_BGM_TITLE);
 
