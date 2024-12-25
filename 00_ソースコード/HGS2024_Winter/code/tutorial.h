@@ -49,6 +49,8 @@ private:
 
 	bool m_bEnd;				// チュートリアル終了かどうか
 
+	bool m_bNext;
+
 	CObject2D* m_pObj2D;		// オブジェクト2Dのポインタ
 
 	CFade* m_pFade;				// フェードのポインタ

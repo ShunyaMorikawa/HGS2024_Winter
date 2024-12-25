@@ -153,6 +153,15 @@ void CTutorial::Update(void)
 	// デバッグ表示の情報取得
 	CDebugProc* pDebugProc = CManager::GetInstance()->GetDebugProc();
 
+	if (m_bEnd
+		&& (pInputKeyboard->GetTrigger(DIK_RETURN)
+		|| pInputKeyboard->GetTrigger(DIK_SPACE)
+		|| pInputPad->GetTrigger(CInputPad::BUTTON_A, 0)
+		|| pInputPad->GetTrigger(CInputPad::BUTTON_START, 0)))
+	{// 画面遷移(フェード)
+		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_GAME);
+	}
+
 	if (!m_bEnd
 		&& pInputKeyboard->GetTrigger(DIK_RETURN)
 		|| pInputKeyboard->GetTrigger(DIK_SPACE)
@@ -169,7 +178,7 @@ void CTutorial::Update(void)
 		// 終了状態にする
 		m_bEnd = true;
 
-		return;
+		//return;
 	}
 	else if (pInputKeyboard->GetTrigger(DIK_A)
 				|| pInputPad->GetTrigger(CInputPad::BUTTON_B, 0))
@@ -183,14 +192,7 @@ void CTutorial::Update(void)
 		m_bEnd = false;
 	}
 
-	if (m_bEnd
-		&& pInputKeyboard->GetTrigger(DIK_RETURN)
-		|| pInputKeyboard->GetTrigger(DIK_SPACE)
-		|| pInputPad->GetTrigger(CInputPad::BUTTON_A, 0)
-		|| pInputPad->GetTrigger(CInputPad::BUTTON_START, 0))
-	{// 画面遷移(フェード)
-		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_GAME);
-	}
+	
 
 	// デバッグ表示
 	pDebugProc->Print("\nチュートリアル\n");
