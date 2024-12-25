@@ -172,9 +172,6 @@ void CPlayer::Update(void)
 	// サウンド情報取得
 	CSound* pSound = CManager::GetInstance()->GetSound();
 
-	// 敵の情報取得
-	CEnemy* pEnemy = CEnemy::GetInstance();
-
 	// 位置取得
 	D3DXVECTOR3 pos = GetPos();
 
@@ -494,12 +491,9 @@ void CPlayer::DestRot()
 	// カメラの情報取得
 	CCamera* pCampera = CManager::GetInstance()->GetCamera();
 
-	// 敵の情報取得
-	CEnemy* pEnemy = CEnemy::GetInstance();
-
 	// プレイヤー・敵の位置
 	D3DXVECTOR3 posPlayer = GetPos();
-	D3DXVECTOR3 posEnemy = pEnemy->GetPos();
+	D3DXVECTOR3 posEnemy;
 
 	// プレイヤーとの角度
 	float RotDest = atan2f(posPlayer.x - posEnemy.x, posPlayer.z - posEnemy.z);
