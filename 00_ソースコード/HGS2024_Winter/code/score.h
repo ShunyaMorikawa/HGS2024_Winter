@@ -24,7 +24,7 @@ public:
 	~CScore();	//デストラクタ
 
 	//メンバ関数
-	static CScore* Create(const D3DXVECTOR3& pos);	//敵生成
+	static CScore* Create();	//敵生成
 
 	HRESULT Init(void);
 	void Uninit(void);

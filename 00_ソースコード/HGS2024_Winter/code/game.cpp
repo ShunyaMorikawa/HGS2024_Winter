@@ -104,7 +104,7 @@ HRESULT CGame::Init(void)
 	CField::Create();
 
 	// ƒXƒRƒA¶¬
-	CScore::Create(D3DXVECTOR3(640.0f, 320.0f, 0.0f));
+	CScore::Create();
 
 	// ‘JˆÚŠÔ
 	m_nTransition = 0;
