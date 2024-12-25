@@ -47,7 +47,10 @@ public:
 private:
 	static CTutorial* m_pTutorial;		// チュートリアルのポインタ
 
-	CField* m_pField;			// ポリゴンのポインタ
+	bool m_bEnd;				// チュートリアル終了かどうか
+
+	CObject2D* m_pObj2D;		// オブジェクト2Dのポインタ
+
 	CFade* m_pFade;				// フェードのポインタ
 };
 
