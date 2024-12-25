@@ -25,6 +25,7 @@
 #include "result.h"
 #include "enemy_manager.h"
 #include "billboard.h"
+#include "score.h"
 
 //========================================
 //–¼‘O‹óŠÔ
@@ -299,11 +300,11 @@ void CEnemy::Hit(int nPresent)
 
 	if (m_nNumPresent == nPresent)
 	{
-
+		CScore::AddScore(200);
 	}
 	else
 	{
-
+		CScore::AddScore(-100);
 	}
 
 	if (nPresent == -1)
