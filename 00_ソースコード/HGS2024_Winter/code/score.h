@@ -47,9 +47,9 @@ public:				//外部からアクセス可能
 	void SetHeight(float fHeight) { m_fHeight = fHeight; }
 	float GetHeight(void) { return m_fHeight; }
 
-	void AddScore(int nScore) { m_nScore += nScore; }
-	void SetScore(int nScore) { m_nScore = nScore; }
-	int GetScore(void) { return m_nScore; }
+	static void AddScore(int nScore) { m_nScore += nScore; }
+	static void SetScore(int nScore) { m_nScore = nScore; }
+	static int GetScore(void) { return m_nScore; }
 
 	//静的メンバ関数
 	static CScore* Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, float fWidth, float fHeight);
@@ -72,10 +72,10 @@ private:			//外部からアクセス不可能
 	float m_fWidth;
 	float m_fHeight;
 	float m_fHue;
-	int m_nScore;
 
 	//静的メンバ変数
 	static int m_nScoreResult;
+	static int m_nScore;
 };
 
 #endif // !_SCORE_H_

@@ -332,8 +332,6 @@ void CPlayer::Present()
 	CInputPad* pInputPad = CManager::GetInstance()->GetInputPad();
 
 	D3DXMATERIAL* pMat;
-	//マテリアルのデータのポイントを取得
-	pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
 
 	bool bPresent = false;
 
@@ -341,10 +339,10 @@ void CPlayer::Present()
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_A, 0) == true)
 	{//Kが押された
 
-		// パーティクル生成
-		Myparticle::Create(Myparticle::TYPE_BULLET, pos);
-
 		m_nNumPresent = 2;
+
+		//マテリアルのデータのポイントを取得
+		pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
 
 		pMat[1].MatD3D.Diffuse = D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f);
 		pMat[1].MatD3D.Emissive = D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f);
@@ -355,10 +353,10 @@ void CPlayer::Present()
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_B, 0) == true)
 	{//Lが押された
 
-		// パーティクル生成
-		Myparticle::Create(Myparticle::TYPE_DEATH, pos);
-
 		m_nNumPresent = 0;
+
+		//マテリアルのデータのポイントを取得
+		pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
 
 		pMat[1].MatD3D.Diffuse = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
 		pMat[1].MatD3D.Emissive = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
@@ -369,10 +367,10 @@ void CPlayer::Present()
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_X, 0) == true)
 	{//Jが押された
 
-		// パーティクル生成
-		Myparticle::Create(Myparticle::TYPE_WALK, pos);
-
 		m_nNumPresent = 1;
+
+		//マテリアルのデータのポイントを取得
+		pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
 
 		pMat[1].MatD3D.Diffuse = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
 		pMat[1].MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
@@ -383,10 +381,10 @@ void CPlayer::Present()
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_Y, 0) == true)
 	{//Iが押された
 
-		// パーティクル生成
-		Myparticle::Create(Myparticle::TYPE_DEATH, pos);
-
 		m_nNumPresent = -1;
+
+		//マテリアルのデータのポイントを取得
+		pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
 
 		pMat[1].MatD3D.Diffuse = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
 		pMat[1].MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
