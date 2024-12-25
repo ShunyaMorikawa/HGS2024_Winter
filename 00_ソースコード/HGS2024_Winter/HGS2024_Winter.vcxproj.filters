@@ -150,6 +150,12 @@
     <ClCompile Include="code\enemy_manager.cpp">
       <Filter>ソース ファイル\system</Filter>
     </ClCompile>
+    <ClCompile Include="code\score.cpp">
+      <Filter>ソース ファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="code\number.cpp">
+      <Filter>ソース ファイル\system</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\game.h">
@@ -264,6 +270,12 @@
       <Filter>ソース ファイル\system</Filter>
     </ClInclude>
     <ClInclude Include="code\enemy_manager.h">
+      <Filter>ソース ファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="code\score.h">
+      <Filter>ソース ファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="code\number.h">
       <Filter>ソース ファイル\system</Filter>
     </ClInclude>
   </ItemGroup>

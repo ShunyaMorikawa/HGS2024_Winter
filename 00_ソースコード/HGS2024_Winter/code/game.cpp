@@ -20,6 +20,7 @@
 #include "texture.h"
 #include "useful.h"
 #include "enemy_manager.h"
+#include "score.h"
 
 //========================================
 //静的メンバ変数
@@ -101,6 +102,9 @@ HRESULT CGame::Init(void)
 
 	// フィールド生成
 	CField::Create();
+
+	// スコア生成
+	CScore::Create(D3DXVECTOR3(640.0f, 320.0f, 0.0f));
 
 	// 遷移時間
 	m_nTransition = 0;
