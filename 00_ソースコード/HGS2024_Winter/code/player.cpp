@@ -51,7 +51,7 @@ namespace
 	const float SHADOW_SIZE = 50.0f;
 
 	const D3DXVECTOR3 INITIAL_POS = { 0.0f, 0.0f, 500.0f };	// プレイヤー初期位置
-	const D3DXVECTOR3 INITIAL_ROT = { 0.0f, 0.0f, 0.0f };	// プレイヤー初期向き	
+	const D3DXVECTOR3 INITIAL_ROT = { 0.0f, 0.0f, 0.0f };	// プレイヤー初期向き
 	const D3DXVECTOR3 GAUGE_POS = { 50.0f, 600.0f, 0.0f };	// ゲージの位置
 
 	const D3DXVECTOR3 PLAYER_POS[MAX_POS] =
@@ -186,6 +186,7 @@ void CPlayer::Update(void)
 
 	// プレイヤー行動
 	Act(SPEED);
+	Present();
 
 #ifdef _DEBUG
 	if (pInputKeyboard->GetTrigger(DIK_F3))
@@ -209,6 +210,7 @@ void CPlayer::Update(void)
 	pDebugProc->Print("プレイヤーの向き：%f、%f、%f\n", rot.x, rot.y, rot.z);
 	pDebugProc->Print("プレイヤーの状態：%d\n", m_eState);
 	pDebugProc->Print("時間：%f\n", m_fDeltaTime);
+	pDebugProc->Print("スティック：%f\n", (float)pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK, 0));
 }
 
 //========================================
@@ -254,7 +256,7 @@ void CPlayer::Act(float fSpeed)
 
 	if (pInputKeyboard->GetPress(DIK_A) == true
 		|| pInputPad->GetPress(CInputPad::BUTTON_LEFT, 0) == true
-		|| pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK, 0) < 0)
+		|| pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK, 0) < -8000)
 	{//Aが押された
 
 		m_nMoveCounter++;
@@ -268,7 +270,7 @@ void CPlayer::Act(float fSpeed)
 	}
 	else if (pInputKeyboard->GetPress(DIK_D) == true
 		|| pInputPad->GetPress(CInputPad::BUTTON_RIGHT, 0) == true
-		|| pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK, 0) > 0)
+		|| pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK, 0) > 8000)
 	{//Dが押された
 
 		m_nMoveCounter++;
@@ -286,7 +288,7 @@ void CPlayer::Act(float fSpeed)
 	}
 
 	{//位置を更新
-		pos = PLAYER_POS[m_nPosCounter % MAX_POS];
+		pos += (PLAYER_POS[m_nPosCounter % MAX_POS] - pos) * 0.5f;
 
 		//移動量を更新(減衰させる)
 		move.x += (0.0f - move.x) * INERTIA;
@@ -329,31 +331,64 @@ void CPlayer::Act(float fSpeed)
 //========================================
 void CPlayer::Present()
 {
+	// 位置取得
+	D3DXVECTOR3 pos = GetPos();
+
 	// キーボードの情報取得
 	CInputKeyboard* pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
 
 	// コントローラーの情報取得	
 	CInputPad* pInputPad = CManager::GetInstance()->GetInputPad();
 
+	D3DXMATERIAL* pMat;
+	//マテリアルのデータのポイントを取得
+	pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
+
 	if (pInputKeyboard->GetTrigger(DIK_K) == true
-		|| pInputPad->GetTrigger(CInputPad::BUTTON_A, 0) < 0)
-	{//Aが押された
-		
+		|| pInputPad->GetTrigger(CInputPad::BUTTON_A, 0) == true)
+	{//Kが押された
+
+		// パーティクル生成
+		Myparticle::Create(Myparticle::TYPE_BULLET, pos);
+
+		m_nNumPresent = 2;
+
+		pMat[1].MatD3D.Diffuse = D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f);
+		pMat[1].MatD3D.Emissive = D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f);
 	}
 	else if (pInputKeyboard->GetTrigger(DIK_L) == true
-		|| pInputPad->GetTrigger(CInputPad::BUTTON_B, 0) < 0)
-	{//Dが押された
+		|| pInputPad->GetTrigger(CInputPad::BUTTON_B, 0) == true)
+	{//Lが押された
 
+		// パーティクル生成
+		Myparticle::Create(Myparticle::TYPE_DEATH, pos);
+
+		m_nNumPresent = 0;
+
+		pMat[1].MatD3D.Diffuse = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
+		pMat[1].MatD3D.Emissive = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
 	}
 	else if (pInputKeyboard->GetTrigger(DIK_J) == true
-		|| pInputPad->GetTrigger(CInputPad::BUTTON_X, 0) < 0)
-	{//Dが押された
+		|| pInputPad->GetTrigger(CInputPad::BUTTON_X, 0) == true)
+	{//Jが押された
 
+		// パーティクル生成
+		Myparticle::Create(Myparticle::TYPE_WALK, pos);
+
+		m_nNumPresent = 1;
+
+		pMat[1].MatD3D.Diffuse = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
+		pMat[1].MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
 	}
 	else if (pInputKeyboard->GetTrigger(DIK_I) == true
-		|| pInputPad->GetTrigger(CInputPad::BUTTON_Y, 0) < 0)
-	{//Dが押された
+		|| pInputPad->GetTrigger(CInputPad::BUTTON_Y, 0) == true)
+	{//Iが押された
 
+		// パーティクル生成
+		Myparticle::Create(Myparticle::TYPE_DEATH, pos);
+
+		pMat[1].MatD3D.Diffuse = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+		pMat[1].MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
 	}
 }
 

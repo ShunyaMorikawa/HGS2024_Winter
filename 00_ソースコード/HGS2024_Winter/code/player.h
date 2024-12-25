@@ -71,6 +71,7 @@ private:
 	int m_nOldMotion;		// 前回のモーション
 	int m_nMoveCounter;		// 移動のカウンター
 	int m_nPosCounter;		// 移動位置のカウンター
+	int m_nNumPresent;		// 渡すプレゼントの番号
 
 	float m_fDeltaTime;		// デルタタイム
 
