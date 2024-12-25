@@ -51,15 +51,15 @@ namespace
 	const float COOLTIME = 2.0f;		// 攻撃のクールタイム
 	const float SHADOW_SIZE = 50.0f;
 
-	const D3DXVECTOR3 INITIAL_POS = { 0.0f, 0.0f, 400.0f };	// プレイヤー初期位置
+	const D3DXVECTOR3 INITIAL_POS = { 0.0f, 0.0f, 300.0f };	// プレイヤー初期位置
 	const D3DXVECTOR3 INITIAL_ROT = { 0.0f, 0.0f, 0.0f };	// プレイヤー初期向き
 	const D3DXVECTOR3 GAUGE_POS = { 50.0f, 600.0f, 0.0f };	// ゲージの位置
 
 	const D3DXVECTOR3 PLAYER_POS[MAX_POS] =
 	{ 
-		{ -150.0f, 0.0f, 400.0f },
-		{ 0.0f, 0.0f, 400.0f },
-		{ 150.0f, 0.0f, 400.0f },
+		{ -125.0f, 0.0f, 300.0f },
+		{ 0.0f, 0.0f, 300.0f },
+		{ 125.0f, 0.0f, 300.0f },
 	};// プレイヤーの目標位置
 }
 
@@ -76,7 +76,8 @@ m_apNumModel	(0),			// モデルの総数
 m_nOldMotion	(0),			// 前回のモーション
 m_eState		(STATE_NONE),	// 状態
 m_fDeltaTime	(0.0f),			// デルタタイム
-m_nMoveCounter		(0),
+m_nMoveCounter(0),
+m_nPosCounter(1),
 m_pEffect		(nullptr),		// エフェクトのポインタ
 m_pMarker		(nullptr)		// ロックオンマーカー表示
 {//値をクリア
@@ -430,14 +431,14 @@ void CPlayer::Motion()
 		return;
 	}
 
-	if (true)
-	{// 歩きモーション
-		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
-	}
-	else
-	{// 待機モーション
-		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
-	}
+	//if (true)
+	//{// 歩きモーション
+	//	pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
+	//}
+	//else
+	//{// 待機モーション
+	//	pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
+	//}
 
 	if (pMotion != nullptr)
 	{// モーション更新
