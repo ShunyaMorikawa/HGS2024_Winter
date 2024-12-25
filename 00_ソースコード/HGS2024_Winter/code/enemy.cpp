@@ -340,10 +340,10 @@ void CEnemy::Angry()
 	{
 		m_nCntWait++;
 
-		m_pBillboard[0]->SetCol(D3DXCOLOR(1.0f, 1.0f - (m_nCntWait * 0.0033f), 1.0f - (m_nCntWait * 0.0033f), 1.0f));
+		m_pBillboard[0]->SetCol(D3DXCOLOR(1.0f, 1.0f - (m_nCntWait * 0.002f), 1.0f - (m_nCntWait * 0.002f), 1.0f));
 		m_pBillboard[0]->SetVertex();
 
-		if (m_nCntWait > 300)
+		if (m_nCntWait > 500)
 		{
 			Hit(3);
 		}
@@ -552,10 +552,10 @@ void CEnemyChild::Angry()
 	{
 		m_nCntWait++;
 
-		m_pBillboard[0]->SetCol(D3DXCOLOR(1.0f, 1.0f - (m_nCntWait * 0.0033f), 1.0f - (m_nCntWait * 0.0033f), 1.0f));
+		m_pBillboard[0]->SetCol(D3DXCOLOR(1.0f, 1.0f - (m_nCntWait * 0.002f), 1.0f - (m_nCntWait * 0.002f), 1.0f));
 		m_pBillboard[0]->SetVertex();
 
-		if (m_nCntWait > 300)
+		if (m_nCntWait > 500)
 		{
 			Hit(3);
 		}
