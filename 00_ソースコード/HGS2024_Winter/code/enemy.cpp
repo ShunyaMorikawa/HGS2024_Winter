@@ -233,7 +233,10 @@ void CEnemy::Update(void)
 		move.y = 0.0f;
 	}
 
-	Angry();
+	if (CGame::GetInstance()->GetState() == CGame::STATE_GAME)
+	{
+		Angry();
+	}
 
 	for (int i = 0; i < 2; i++)
 	{
