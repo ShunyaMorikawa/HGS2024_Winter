@@ -209,48 +209,11 @@ void CEnemy::Update(void)
 		move.y = 0.0f;
 	}
 	
-	// カウント加算
-	m_nCnt++;
-
-	if (m_nCnt >= ATTACKCOUNTER)
-	{// 攻撃するまでの時間
-		m_bAttack = true;
-
-		for (int n = 0; n < MAXDIRECTION; n++)
-		{// 弾を8方向に飛ばす
-			float fAngle = D3DX_PI * 2.0f / MAXDIRECTION;
-
-			// 発射角度をずらす
-			fAngle *= n;
-			D3DXVECTOR3 bulletmove;
-			bulletmove.x = sinf(fAngle) * BULLETMOVE;
-			bulletmove.y = 0.0f;
-			bulletmove.z = cosf(fAngle) * BULLETMOVE;
-
-			// 弾の生成
-			CBullet::Create(pos, bulletmove, BULLETLIFE);
-		}
-
-		// サウンド情報取得
-		CSound* pSound = CManager::GetInstance()->GetSound();
-
-		// サウンド再生
-		pSound->PlaySoundA(CSound::SOUND_LABEL_SE_BULLET);
-
-		m_nCnt = 0;
-	}
-
 	if (m_pGauge != nullptr)
 	{
 		// ゲージに体力設定
 		m_pGauge->SetLife(m_nLife);
 	}
-
-	// 位置設定
-	SetPos(pos);
-
-	// 移動量設定
-	SetMove(move);
 
 	// 向き設定
 	SetRot(rot);

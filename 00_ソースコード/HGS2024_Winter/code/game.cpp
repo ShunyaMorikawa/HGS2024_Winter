@@ -95,6 +95,9 @@ HRESULT CGame::Init(void)
 	// プレイヤー生成
 	CPlayer::Create(Constance::PLAYER_TXT);
 
+	// エネミー生成
+	CEnemy::Create(Constance::ENEMY_TXT);
+
 	// フィールド生成
 	CField::Create();
 
