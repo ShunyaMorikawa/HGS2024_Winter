@@ -25,6 +25,7 @@
 #include "result.h"
 #include "enemy_manager.h"
 #include "billboard.h"
+#include "score.h"
 
 //========================================
 //名前空間
@@ -49,14 +50,14 @@ namespace
 	const D3DXVECTOR3 GAUGE_POS = { 600.0f, 25.0f, 0.0f };	// 敵ゲージの初期位置
 	const D3DXVECTOR3 GET_POS = { -1000.0f, 0.0f, 300.0f };	// プレゼント受け取った後の位置
 	const D3DXVECTOR3 GET_POS_OTAKU = { 1000.0f, 0.0f, 300.0f };	// プレゼント受け取った後の位置
-	const D3DXVECTOR3 LANE_OFFSET = { 0.0f, 0.0f, -300.0f };	// プレゼント受け取った後の位置
-	const D3DXVECTOR3 BILLBOARD_OFFSET = { -100.0f, 200.0f, 0.0f };	// プレゼント受け取った後の位置
+	const D3DXVECTOR3 LANE_OFFSET = { 0.0f, 0.0f, -150.0f };	// プレゼント受け取った後の位置
+	const D3DXVECTOR3 BILLBOARD_OFFSET = { -75.0f, 100.0f, -30.0f };	// プレゼント受け取った後の位置
 
 	const D3DXVECTOR3 LANE_POS[3] =
 	{
-		{ -200.0f, 0.0f, 200.0f },
+		{ -150.0f, 0.0f, 200.0f },
 		{ 0.0f, 0.0f, 200.0f },
-		{ 200.0f, 0.0f, 200.0f },
+		{ 150.0f, 0.0f, 200.0f },
 	};// プレイヤーの目標位置
 
 	const char* m_apFilename[3] =
@@ -66,11 +67,13 @@ namespace
 		"data\\TEXTURE\\presentBox\\present_box_02.png",
 	};
 
-	const char* m_apFilenameOtaku[3] =
+	const char* m_apFilenameOtaku[5] =
 	{
-		"data\\TEXTURE\\presentBox\\present_box_00.png",
-		"data\\TEXTURE\\presentBox\\present_box_01.png",
-		"data\\TEXTURE\\presentBox\\present_box_02.png",
+		"data\\TEXTURE\\serif\\serif00.png",
+		"data\\TEXTURE\\serif\\serif01.png",
+		"data\\TEXTURE\\serif\\serif02.png",
+		"data\\TEXTURE\\serif\\serif03.png",
+		"data\\TEXTURE\\serif\\serif04.png",
 	};
 }
 
@@ -130,10 +133,10 @@ HRESULT CEnemy::Init(std::string pfile)
 	m_GolePos = GET_POS;
 	m_nNumPresent = rand() % 3;
 
-	m_pBillboard[0] = CBillboard::Create(INITIAL_POS + BILLBOARD_OFFSET, 100.0f, 100.0f);
+	m_pBillboard[0] = CBillboard::Create(INITIAL_POS + BILLBOARD_OFFSET, 50.0f, 50.0f);
 	m_pBillboard[0]->BindTexture(pTexture->Regist("data\\TEXTURE\\speech\\speech.png"));
 
-	m_pBillboard[1] = CBillboard::Create(INITIAL_POS + BILLBOARD_OFFSET, 100.0f, 100.0f);
+	m_pBillboard[1] = CBillboard::Create(INITIAL_POS + BILLBOARD_OFFSET, 30.0f, 30.0f);
 	m_pBillboard[1]->BindTexture(pTexture->Regist(m_apFilename[m_nNumPresent]));
 
 	return S_OK;
@@ -230,7 +233,10 @@ void CEnemy::Update(void)
 		move.y = 0.0f;
 	}
 
-	Angry();
+	if (CGame::GetInstance()->GetState() == CGame::STATE_GAME)
+	{
+		Angry();
+	}
 
 	for (int i = 0; i < 2; i++)
 	{
@@ -297,11 +303,11 @@ void CEnemy::Hit(int nPresent)
 
 	if (m_nNumPresent == nPresent)
 	{
-		
+		CScore::AddScore(200);
 	}
 	else
 	{
-
+		CScore::AddScore(-100);
 	}
 
 	if (nPresent == -1)
@@ -330,7 +336,7 @@ void CEnemy::Angry()
 	D3DXVECTOR3 pos = GetPos();
 
 	D3DXVECTOR3 vecLane = LANE_POS[m_nNumLane] - pos;
-	if (D3DXVec3Length(&vecLane) < 150.0f)
+	if (D3DXVec3Length(&vecLane) < 100.0f)
 	{
 		m_nCntWait++;
 
@@ -524,10 +530,10 @@ HRESULT CEnemyChild::Init(std::string pfile)
 
 	m_nNumPresent = rand() % 3;
 
-	m_pBillboard[0] = CBillboard::Create(INITIAL_POS + BILLBOARD_OFFSET, 100.0f, 100.0f);
+	m_pBillboard[0] = CBillboard::Create(INITIAL_POS + BILLBOARD_OFFSET, 50.0f, 50.0f);
 	m_pBillboard[0]->BindTexture(pTexture->Regist("data\\TEXTURE\\speech\\speech.png"));
 
-	m_pBillboard[1] = CBillboard::Create(INITIAL_POS + BILLBOARD_OFFSET, 100.0f, 100.0f);
+	m_pBillboard[1] = CBillboard::Create(INITIAL_POS + BILLBOARD_OFFSET, 30.0f, 30.0f);
 	m_pBillboard[1]->BindTexture(pTexture->Regist(m_apFilename[m_nNumPresent]));
 
 	return S_OK;
@@ -542,7 +548,7 @@ void CEnemyChild::Angry()
 	D3DXVECTOR3 pos = GetPos();
 
 	D3DXVECTOR3 vecLane = LANE_POS[m_nNumLane] - pos;
-	if (D3DXVec3Length(&vecLane) < 150.0f)
+	if (D3DXVec3Length(&vecLane) < 100.0f)
 	{
 		m_nCntWait++;
 
@@ -589,11 +595,11 @@ HRESULT CEnemyOtaku::Init(std::string pfile)
 
 	m_nNumPresent = -1;
 
-	m_pBillboard[0] = CBillboard::Create(INITIAL_POS + BILLBOARD_OFFSET, 100.0f, 100.0f);
-	m_pBillboard[0]->BindTexture(pTexture->Regist("data\\TEXTURE\\speech\\speech.png"));
+	m_pBillboard[0] = CBillboard::Create(INITIAL_POS + BILLBOARD_OFFSET, 50.0f, 50.0f);
+	m_pBillboard[0]->BindTexture(pTexture->Regist("data\\TEXTURE\\speech\\speech01.png"));
 
-	m_pBillboard[1] = CBillboard::Create(INITIAL_POS + BILLBOARD_OFFSET, 100.0f, 0.0f);
-	m_pBillboard[1]->BindTexture(pTexture->Regist(m_apFilenameOtaku[rand() % 3]));
+	m_pBillboard[1] = CBillboard::Create(INITIAL_POS + BILLBOARD_OFFSET, 50.0f, 25.0f);
+	m_pBillboard[1]->BindTexture(pTexture->Regist(m_apFilenameOtaku[rand() % 5]));
 
 	return S_OK;
 }

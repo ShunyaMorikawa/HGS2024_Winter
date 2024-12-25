@@ -89,6 +89,9 @@ HRESULT CTutorial::Init(void)
 	// テクスチャ情報取得
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 
+	// サウンド情報取得
+	CSound* pSound = CManager::GetInstance()->GetSound();
+
 	if (m_pObj2D == nullptr)
 	{// オブジェクト2D生成
 		m_pObj2D = CObject2D::Create();
@@ -108,6 +111,8 @@ HRESULT CTutorial::Init(void)
 
 	// 終了してない
 	m_bEnd = false;
+
+	pSound->PlaySound(CSound::SOUND_LABEL_BGM_TUTORIAL);
 
 	//成功を返す
 	return S_OK;
@@ -149,7 +154,9 @@ void CTutorial::Update(void)
 	CDebugProc* pDebugProc = CManager::GetInstance()->GetDebugProc();
 
 	if (!m_bEnd
-		&& pInputKeyboard->GetTrigger(DIK_D)
+		&& pInputKeyboard->GetTrigger(DIK_RETURN)
+		|| pInputKeyboard->GetTrigger(DIK_SPACE)
+		|| pInputKeyboard->GetTrigger(DIK_D)
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_A, 0))
 	{// 二枚目のテクスチャにする
 		
@@ -178,6 +185,8 @@ void CTutorial::Update(void)
 
 	if (m_bEnd
 		&& pInputKeyboard->GetTrigger(DIK_RETURN)
+		|| pInputKeyboard->GetTrigger(DIK_SPACE)
+		|| pInputPad->GetTrigger(CInputPad::BUTTON_A, 0)
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_START, 0))
 	{// 画面遷移(フェード)
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_GAME);

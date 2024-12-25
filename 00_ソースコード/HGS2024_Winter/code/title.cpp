@@ -92,8 +92,14 @@ CTitle* CTitle::Create(void)
 //=======================================
 HRESULT CTitle::Init(void)
 {
+	//テクスチャのポインタ
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+
 	// カメラの情報取得
 	CCamera* pCamera = CManager::GetInstance()->GetCamera();
+
+	// サウンド情報取得
+	CSound* pSound = CManager::GetInstance()->GetSound();
 
 	// カメラの初期化
 	pCamera->Init();
@@ -106,6 +112,13 @@ HRESULT CTitle::Init(void)
 	CWall::Create(D3DXVECTOR3(0.0f, Constance::WALL_POS_Y, Constance::WALL_POS), D3DXVECTOR3(D3DX_PI * 0.5f, D3DX_PI, 0.0f));
 	CWall::Create(D3DXVECTOR3(Constance::WALL_POS, Constance::WALL_POS_Y, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f, -D3DX_PI * 0.5f, 0.0f));
 	CWall::Create(D3DXVECTOR3(-Constance::WALL_POS, Constance::WALL_POS_Y, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f, D3DX_PI * 0.5f, 0.0f));
+
+	m_pObject2D = CObject2D::Create();
+	m_pObject2D->SetPos(D3DXVECTOR3(640.0f, 300.0f, 0.0f));
+	m_pObject2D->SetSize(960.0f, 540.0f);
+	m_pObject2D->BindTexture(pTexture->Regist("data\\TEXTURE\\title\\title_logo.png"));
+
+	pSound->PlaySound(CSound::SOUND_LABEL_BGM_TITLE);
 
 	//成功を返す
 	return S_OK;
@@ -149,7 +162,8 @@ void CTitle::Update(void)
 	// タイトルカメラ
 	pCamera->Title();
 
-	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true || 
+	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true ||
+		pInputKeyboard->GetTrigger(DIK_SPACE) == true ||
 		pInputPad->GetTrigger(CInputPad::BUTTON_A, 0) == true ||
 		pInputPad->GetTrigger(CInputPad::BUTTON_START, 0) == true)
 	{

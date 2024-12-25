@@ -27,6 +27,8 @@ class CGauge;
 class CWall;
 class CMapObject;
 class CEnemyManager;
+class CScore;
+class CTimer;
 
 //========================================
 // 定数定義
@@ -42,6 +44,16 @@ namespace
 class CGame : public CScene
 {
 public:
+	// 状態
+	enum STATE
+	{// プレイヤーの状態
+		STATE_WAIT = 0,
+		STATE_START,
+		STATE_GAME,
+		STATE_FINISH,
+		STATE_MAX
+	};
+
 	CGame();	//コンストラクタ
 	~CGame();	//デストラクタ
 
@@ -53,6 +65,9 @@ public:
 	void Update(void);
 	void Draw(void);
 	void PauseState(bool bPauseState) { m_bPause = bPauseState; }	//ポーズ状態かどうか
+
+	CScore* GetScore() { return m_pScore; }
+	STATE GetState() { return m_state; }
 
 	static CGame* GetInstance();		// ゲームマネージャーの情報
 	
@@ -68,6 +83,10 @@ private:
 	CFade* m_pFade;				// フェードのポインタ
 	CObject2D* m_pObj2D;		// オブジェクト2Dのポインタ
 	CEnemyManager* m_pEnemyManager;	// 敵マネージャーのポインタ
+	CScore* m_pScore;
+	CTimer* m_pTime;
+	
+	STATE m_state;
 };
 
 #endif

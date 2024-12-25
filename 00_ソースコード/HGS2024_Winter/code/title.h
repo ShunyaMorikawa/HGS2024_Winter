@@ -34,6 +34,7 @@ public:
 
 private:
 	static CTitle* m_pTitle;		// チュートリアルのポインタ
+	CObject2D* m_pObject2D;
 };
 
 #endif

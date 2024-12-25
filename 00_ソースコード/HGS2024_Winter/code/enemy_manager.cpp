@@ -106,7 +106,7 @@ void CEnemyManager::Update(void)
 	if (rand() % 100 > 75)
 	{
 		// エネミー生成
-		pEnemy = CEnemyOtaku::Create(Constance::OTAKU_TXT[rand() % 3]);
+		pEnemy = CEnemyOtaku::Create(Constance::OTAKU_TXT[0]);
 	}
 	else
 	{

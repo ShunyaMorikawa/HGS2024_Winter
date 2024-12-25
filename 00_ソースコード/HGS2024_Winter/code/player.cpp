@@ -51,15 +51,15 @@ namespace
 	const float COOLTIME = 2.0f;		// 攻撃のクールタイム
 	const float SHADOW_SIZE = 50.0f;
 
-	const D3DXVECTOR3 INITIAL_POS = { 0.0f, 0.0f, 500.0f };	// プレイヤー初期位置
+	const D3DXVECTOR3 INITIAL_POS = { 0.0f, 0.0f, 400.0f };	// プレイヤー初期位置
 	const D3DXVECTOR3 INITIAL_ROT = { 0.0f, 0.0f, 0.0f };	// プレイヤー初期向き
 	const D3DXVECTOR3 GAUGE_POS = { 50.0f, 600.0f, 0.0f };	// ゲージの位置
 
 	const D3DXVECTOR3 PLAYER_POS[MAX_POS] =
 	{ 
-		{ -200.0f, 0.0f, 400.0f },
+		{ -150.0f, 0.0f, 400.0f },
 		{ 0.0f, 0.0f, 400.0f },
-		{ 200.0f, 0.0f, 400.0f },
+		{ 150.0f, 0.0f, 400.0f },
 	};// プレイヤーの目標位置
 }
 
@@ -175,9 +175,12 @@ void CPlayer::Update(void)
 	// 向き取得
 	D3DXVECTOR3 rot = GetRot();
 
-	// プレイヤー行動
-	Act(SPEED);
-	Present();
+	if (CGame::GetInstance()->GetState() == CGame::STATE_GAME)
+	{
+		// プレイヤー行動
+		Act(SPEED);
+		Present();
+	}
 
 #ifdef _DEBUG
 	if (pInputKeyboard->GetTrigger(DIK_F3))
@@ -322,6 +325,9 @@ void CPlayer::Act(float fSpeed)
 //========================================
 void CPlayer::Present()
 {
+	// サウンド情報取得
+	CSound* pSound = CManager::GetInstance()->GetSound();
+
 	// 位置取得
 	D3DXVECTOR3 pos = GetPos();
 
@@ -332,66 +338,72 @@ void CPlayer::Present()
 	CInputPad* pInputPad = CManager::GetInstance()->GetInputPad();
 
 	D3DXMATERIAL* pMat;
-	//マテリアルのデータのポイントを取得
-	pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
 
 	bool bPresent = false;
 
-	if (pInputKeyboard->GetTrigger(DIK_K) == true
+	if (pInputKeyboard->GetTrigger(DIK_DOWNARROW) == true
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_A, 0) == true)
 	{//Kが押された
 
-		// パーティクル生成
-		Myparticle::Create(Myparticle::TYPE_BULLET, pos);
-
 		m_nNumPresent = 2;
+
+		//マテリアルのデータのポイントを取得
+		pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
 
 		pMat[1].MatD3D.Diffuse = D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f);
 		pMat[1].MatD3D.Emissive = D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f);
 
 		bPresent = true;
+
+		pSound->PlaySound(CSound::SOUND_LABEL_SE_PRESENT);
 	}
-	else if (pInputKeyboard->GetTrigger(DIK_L) == true
+	else if (pInputKeyboard->GetTrigger(DIK_RIGHTARROW) == true
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_B, 0) == true)
 	{//Lが押された
 
-		// パーティクル生成
-		Myparticle::Create(Myparticle::TYPE_DEATH, pos);
-
 		m_nNumPresent = 0;
+
+		//マテリアルのデータのポイントを取得
+		pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
 
 		pMat[1].MatD3D.Diffuse = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
 		pMat[1].MatD3D.Emissive = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
 
 		bPresent = true;
+
+		pSound->PlaySound(CSound::SOUND_LABEL_SE_PRESENT);
 	}
-	else if (pInputKeyboard->GetTrigger(DIK_J) == true
+	else if (pInputKeyboard->GetTrigger(DIK_LEFTARROW) == true
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_X, 0) == true)
 	{//Jが押された
 
-		// パーティクル生成
-		Myparticle::Create(Myparticle::TYPE_WALK, pos);
-
 		m_nNumPresent = 1;
+
+		//マテリアルのデータのポイントを取得
+		pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
 
 		pMat[1].MatD3D.Diffuse = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
 		pMat[1].MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
 
 		bPresent = true;
+
+		pSound->PlaySound(CSound::SOUND_LABEL_SE_PRESENT);
 	}
-	else if (pInputKeyboard->GetTrigger(DIK_I) == true
+	else if (pInputKeyboard->GetTrigger(DIK_UPARROW) == true
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_Y, 0) == true)
 	{//Iが押された
 
-		// パーティクル生成
-		Myparticle::Create(Myparticle::TYPE_DEATH, pos);
-
 		m_nNumPresent = -1;
+
+		//マテリアルのデータのポイントを取得
+		pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
 
 		pMat[1].MatD3D.Diffuse = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
 		pMat[1].MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
 
 		bPresent = true;
+
+		pSound->PlaySound(CSound::SOUND_LABEL_SE_SCREAM);
 	}
 
 	if (!bPresent) { return; }
@@ -420,7 +432,7 @@ void CPlayer::Motion()
 
 	if (true)
 	{// 歩きモーション
-		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_WALK);
+		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
 	}
 	else
 	{// 待機モーション

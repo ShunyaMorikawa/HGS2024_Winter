@@ -20,6 +20,8 @@
 #include "texture.h"
 #include "useful.h"
 #include "enemy_manager.h"
+#include "score.h"
+#include "timer.h"
 
 //========================================
 //静的メンバ変数
@@ -31,6 +33,13 @@ CGame *CGame::m_pGame = nullptr;		// ゲームのポインタ
 //========================================
 namespace
 {
+	const int STATE_TIME[CGame::STATE_MAX] =
+	{
+		30,
+		30,
+		30,
+		60,
+	};// プレイヤーの目標位置
 }
 
 //========================================
@@ -42,9 +51,11 @@ m_nTransition	(0),		// 遷移時間
 m_pObjectX		(nullptr),	// オブジェクトXのポインタ
 m_pIdxMesh		(nullptr),	// インデックスメッシュのポインタ
 m_pFade			(nullptr),	// フェードのポインタ
-m_pObj2D		(nullptr)	// オブジェクト2Dのポインタ
+m_pObj2D		(nullptr),	// オブジェクト2Dのポインタ
+m_pTime			(nullptr)
 {
 	m_pGame = nullptr;		// ゲームのポインタ
+	m_state = STATE_START;
 }
 
 //========================================
@@ -93,6 +104,9 @@ HRESULT CGame::Init(void)
 	//テクスチャのポインタ
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 
+	//テクスチャのポインタ
+	CSound* pSound = CManager::GetInstance()->GetSound();
+
 	// プレイヤー生成
 	CPlayer::Create(Constance::PLAYER_TXT);
 
@@ -102,11 +116,21 @@ HRESULT CGame::Init(void)
 	// フィールド生成
 	CField::Create();
 
+	// スコア生成
+	m_pScore = CScore::Create(D3DXVECTOR3(410.0f, 100.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 80.0f, 50.0f);
+
+	if (m_pTime == nullptr)
+	{// タイム生成
+		m_pTime = CTimer::Create(D3DXVECTOR3(640.0f, 320.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 80.0f, 50.0f);
+	}
+
 	// 遷移時間
 	m_nTransition = 0;
 
 	//ポーズの状態
 	m_bPause = false;
+
+	pSound->PlaySound(CSound::SOUND_LABEL_BGM_GAME);
 
 	return S_OK;
 }
@@ -120,6 +144,12 @@ void CGame::Uninit(void)
 	{
 		m_pObj2D->Uninit();
 		m_pObj2D = nullptr;
+	}
+
+	if (m_pTime != nullptr)
+	{
+		m_pTime->Uninit();
+		m_pTime = nullptr;
 	}
 
 	// サウンド情報取得
@@ -157,6 +187,32 @@ void CGame::Update(void)
 
 	// デバッグ表示の情報取得
 	CDebugProc* pDebugProc = CManager::GetInstance()->GetDebugProc();
+
+	m_nTransition++;
+
+	if (m_nTransition > STATE_TIME[m_state])
+	{
+		m_nTransition = 0;
+
+		switch (m_state)
+		{
+		case CGame::STATE_WAIT:
+			m_state = STATE_START;
+			break;
+		case CGame::STATE_START:
+			m_state = STATE_GAME;
+			break;
+		case CGame::STATE_GAME:
+			break;
+		case CGame::STATE_FINISH:
+			break;
+		case CGame::STATE_MAX:
+			m_state = STATE_START;
+			break;
+		default:
+			break;
+		}
+	}
 
 	// デバッグ表示
 	pDebugProc->Print("\nゲーム\n");
