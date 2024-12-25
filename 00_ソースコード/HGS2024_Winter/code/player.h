@@ -78,7 +78,6 @@ private:
 	PLAYERSTATE m_eState;	// 状態
 
 	CEffect* m_pEffect;				// エフェクトのポインタ
-	CGauge* m_pGauge;				// ゲージのポインタ
 	CModel* m_apModel[MAX_PARTS];	// モデルのダブルポインタ
 	CLockonMarker* m_pMarker;		// ロックオンマーカーのポインタ
 

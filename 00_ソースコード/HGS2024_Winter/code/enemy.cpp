@@ -23,6 +23,7 @@
 #include "fade.h"
 #include "gauge.h"
 #include "result.h"
+#include "enemy_manager.h"
 
 //========================================
 //名前空間
@@ -51,14 +52,10 @@ namespace
 //コンストラクタ
 //========================================
 CEnemy::CEnemy(int nPriority) : CCharacter(nPriority),
-m_nLife		(0),			// 体力
 m_nCnt		(0),			// カウント
-m_fRadius	(0.0f),			// 半径
-m_bWalk		(false),		// 歩き
-m_bAttack	(false),		// 攻撃
-m_eState	(STATE_NONE),	// 状態
-m_pGauge	(nullptr)		// ゲージ
+m_eState	(STATE_NONE)	// 状態
 {//値をクリア
+
 }
 
 //========================================
@@ -97,12 +94,6 @@ HRESULT CEnemy::Init(std::string pfile)
 	// 向き設定
 	SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
-	// 体力
-	m_nLife = LIFE;
-
-	// 半径
-	m_fRadius = RADIUS;
-
 	return S_OK;
 }
 
@@ -111,6 +102,7 @@ HRESULT CEnemy::Init(std::string pfile)
 //========================================
 void CEnemy::Uninit(void)
 {
+	CEnemyManager::GetInstance()->GetListEnemy()->remove(this);
 	// 終了
 	CCharacter::Uninit();
 }
@@ -209,7 +201,6 @@ void CEnemy::Update(void)
 	pDebugProc->Print("\n敵の位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
 	pDebugProc->Print("敵の向き：%f、%f、%f\n", rot.x, rot.y, rot.z);
 	pDebugProc->Print("敵の移動量：%f、%f、%f\n", move.x, move.y, move.z);
-	pDebugProc->Print("敵の体力：%d\n", m_nLife);
 	pDebugProc->Print("F4で敵の体力0\n");
 }
 
@@ -238,36 +229,6 @@ void CEnemy::Hit(int nLife)
 
 	// 位置取得
 	D3DXVECTOR3 pos = GetPos();
-
-	// 体力減らす
-	m_nLife -= nLife;
-
-	if (m_pGauge != nullptr)
-	{
-		// ゲージに体力設定
-		m_pGauge->SetLife(m_nLife);
-	}
-
-	if (m_nLife <= 0)
-	{
-		// パーティクル生成
-		Myparticle::Create(Myparticle::TYPE_DEATH, pos);
-
-		// 生成
-		CObject2D* pObje2D = CObject2D::Create();
-
-		// 位置設定
-		pObje2D->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 00.0f));
-
-		// サイズ設定
-		pObje2D->SetSize(1280.0f, 200.0f);
-
-		// 勝利テクスチャ
-		pObje2D->BindTexture(pTexture->Regist("data\\texture\\win.png"));
-
-		// 終了
-		Uninit();
-	}
 }
 
 //========================================
@@ -318,22 +279,9 @@ void CEnemy::Motion()
 	// 移動量取得
 	D3DXVECTOR3 move = GetMove();
 
-	if (m_bWalk)
+	if (true)
 	{// 歩きモーション
 		pMotion->Set(CMotion::ENEMY_MOTIONTYPE_WALK);
-	}
-	else if (m_bAttack)
-	{// 切り下ろしモーション
-		pMotion->Set(CMotion::ENEMY_MOTIONTYPE_ATTACK);
-
-		m_bWalk = false;
-
-		move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-		if (pMotion->IsFinish() && m_bAttack == true)
-		{// モーション終了
-			m_bAttack = false;
-		}
 	}
 	else
 	{
