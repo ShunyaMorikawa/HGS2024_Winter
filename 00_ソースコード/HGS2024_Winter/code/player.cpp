@@ -431,14 +431,14 @@ void CPlayer::Motion()
 		return;
 	}
 
-	if (true)
-	{// 歩きモーション
-		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
-	}
-	else
-	{// 待機モーション
-		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
-	}
+	//if (true)
+	//{// 歩きモーション
+	//	pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
+	//}
+	//else
+	//{// 待機モーション
+	//	pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
+	//}
 
 	if (pMotion != nullptr)
 	{// モーション更新

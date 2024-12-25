@@ -37,7 +37,7 @@ MODEL_FILENAME = data/MODEL/idol/14_footL.x		# [14]右足
 # キャラクター情報
 #------------------------------------------------------------------------------
 CHARACTERSET
-	NUM_PARTS = 15					# パーツ数
+	NUM_PARTS = 15
 	
 	PARTSSET
 		INDEX = 0

@@ -108,7 +108,7 @@ HRESULT CGame::Init(void)
 	CSound* pSound = CManager::GetInstance()->GetSound();
 
 	// ƒvƒŒƒCƒ„[¶¬
-	CPlayer::Create(Constance::OTAKU_TXT[0]);
+	CPlayer::Create(Constance::PLAYER_TXT);
 
 	m_pEnemyManager = CEnemyManager::GetInstance();
 	m_pEnemyManager->Init();
