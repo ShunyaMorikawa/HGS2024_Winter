@@ -14,6 +14,11 @@
 #include "renderer.h"
 
 //========================================
+// 前方宣言
+//========================================
+class CPress_Enter;
+
+//========================================
 //タイトルクラス
 //========================================
 class CTitle : public CScene
@@ -35,6 +40,7 @@ public:
 private:
 	static CTitle* m_pTitle;		// チュートリアルのポインタ
 	CObject2D* m_pObject2D;
+	CPress_Enter* m_pEnter;
 };
 
 #endif
