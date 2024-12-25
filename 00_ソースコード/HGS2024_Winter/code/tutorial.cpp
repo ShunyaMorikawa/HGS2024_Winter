@@ -154,7 +154,9 @@ void CTutorial::Update(void)
 	CDebugProc* pDebugProc = CManager::GetInstance()->GetDebugProc();
 
 	if (!m_bEnd
-		&& pInputKeyboard->GetTrigger(DIK_D)
+		&& pInputKeyboard->GetTrigger(DIK_RETURN)
+		|| pInputKeyboard->GetTrigger(DIK_SPACE)
+		|| pInputKeyboard->GetTrigger(DIK_D)
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_A, 0))
 	{// 二枚目のテクスチャにする
 		
@@ -183,6 +185,7 @@ void CTutorial::Update(void)
 
 	if (m_bEnd
 		&& pInputKeyboard->GetTrigger(DIK_RETURN)
+		|| pInputKeyboard->GetTrigger(DIK_SPACE)
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_A, 0)
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_START, 0))
 	{// 画面遷移(フェード)

@@ -162,7 +162,8 @@ void CTitle::Update(void)
 	// タイトルカメラ
 	pCamera->Title();
 
-	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true || 
+	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true ||
+		pInputKeyboard->GetTrigger(DIK_SPACE) == true ||
 		pInputPad->GetTrigger(CInputPad::BUTTON_A, 0) == true ||
 		pInputPad->GetTrigger(CInputPad::BUTTON_START, 0) == true)
 	{
