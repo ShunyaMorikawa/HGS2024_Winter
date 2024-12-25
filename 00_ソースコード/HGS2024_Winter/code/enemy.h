@@ -44,7 +44,12 @@ public:
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
-	void Hit(int nLife);
+	void Hit(int nPresent);
+
+	int GetNumPresent() { return m_nNumPresent; }
+	void SetParent(CEnemy* pEnemy) { m_pParent = pEnemy; }
+	void SetChild(CEnemy* pChild) { m_pChild = pChild; }
+	void SetNumLane(int nNumLane) { m_nNumLane = nNumLane; }
 
 private:
 	void NockBack();
@@ -53,8 +58,14 @@ private:
 	void CollisionCircle();
 
 	//メンバ変数
-	int m_nCnt;			// カウント
+	CEnemy* m_pParent;
+	CEnemy* m_pChild;
+	int m_nNumPresent;	// カウント
+	int m_nNumLane;		// カウント
+	int m_nCntWait;		// カウント
 	int m_nState;		// 状態
+
+	bool bGet;
 
 	ENEMYSTATE m_eState;	// 状態
 };

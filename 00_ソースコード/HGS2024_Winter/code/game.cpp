@@ -122,8 +122,6 @@ void CGame::Uninit(void)
 		m_pObj2D = nullptr;
 	}
 
-	m_pEnemyManager->Release();
-	
 	// ƒTƒEƒ“ƒhî•ñŽæ“¾
 	CSound* pSound = CManager::GetInstance()->GetSound();
 
@@ -135,6 +133,8 @@ void CGame::Uninit(void)
 		delete m_pGame;
 		m_pGame = nullptr;
 	}
+
+	m_pEnemyManager->Release();
 }
 
 //========================================

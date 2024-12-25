@@ -14,7 +14,7 @@
 //========================================
 namespace
 {
-	
+	const int MAX_ENEMY = 10;				// 体力
 }
 
 //静的メンバ変数宣言-------------------
@@ -72,10 +72,6 @@ HRESULT CEnemyManager::Release(void)
 //========================================
 HRESULT CEnemyManager::Init()
 {
-	// エネミー生成
-	listEnemy.push_back(CEnemy::Create(Constance::ENEMY_TXT));
-	m_nCntEnemy = 60;
-
 	return S_OK;
 }
 
@@ -84,7 +80,10 @@ HRESULT CEnemyManager::Init()
 //========================================
 void CEnemyManager::Uninit(void)
 {
-	listEnemy.clear();
+	for (int i = 0; i < 3; i++)
+	{
+		listEnemy[i].clear();
+	}
 }
 
 //========================================
@@ -94,24 +93,30 @@ void CEnemyManager::Update(void)
 {
 	m_nCntEnemy++;
 
-	if (m_nCntEnemy > 30)
+	if (m_nCntEnemy < 120) { return; }
+
+	int nLane = rand() % 3;
+
+	// 敵の数が一定数超えたら出さない
+	if ((int)listEnemy[nLane].size() > MAX_ENEMY) { return; }
+
+	m_nCntEnemy = 0;
+
+	// エネミー生成
+	CEnemy* pEnemy = CEnemy::Create(Constance::ENEMY_TXT);
+
+	// 敵に情報を設定
+	if (listEnemy[nLane].empty())
 	{
-		std::list<CEnemy*>  listCollisionDef = listEnemy;
-		for (auto itrCollision : listCollisionDef)
-		{
-			itrCollision->Uninit();
-		}
+		pEnemy->SetParent(nullptr);
 	}
-
-	if (m_nCntEnemy > 60)
+	else
 	{
-		m_nCntEnemy = 0;
-
-		// エネミー生成
-		listEnemy.push_back(CEnemy::Create(Constance::ENEMY_TXT));
+		CEnemy* pEnemyParent = listEnemy[nLane].back();
+		pEnemy->SetParent(pEnemyParent);
+		pEnemyParent->SetChild(pEnemy);
 	}
-
-	// デバッグ表示
-	CDebugProc* pDebugProc = CManager::GetInstance()->GetDebugProc();
-	pDebugProc->Print("敵の数 : %d\n", (int)listEnemy.size());
+	
+	pEnemy->SetNumLane(nLane);
+	listEnemy[nLane].push_back(pEnemy);
 }

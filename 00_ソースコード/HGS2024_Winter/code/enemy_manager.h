@@ -31,7 +31,7 @@ public:
 	void Uninit(void);
 	void Update(void);
 
-	std::list<CEnemy*>* GetListEnemy(void) { return &listEnemy; }
+	std::list<CEnemy*>* GetListEnemy(int nIdx) { return &listEnemy[nIdx]; }
 
 	static CEnemyManager* GetInstance();
 	static HRESULT Release(void);
@@ -39,7 +39,7 @@ public:
 private:
 	
 	//ƒƒ“ƒo•Ï”
-	std::list<CEnemy*> listEnemy;
+	std::list<CEnemy*> listEnemy[3];
 	int m_nCntEnemy;
 
 	//Ã“Iƒƒ“ƒo•Ï”

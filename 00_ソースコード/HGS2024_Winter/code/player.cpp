@@ -15,6 +15,7 @@
 #include "game.h"
 #include "particle.h"
 #include "enemy.h"
+#include "enemy_manager.h"
 #include "useful.h"
 #include "gauge.h"
 #include "main.h"
@@ -334,6 +335,8 @@ void CPlayer::Present()
 	//マテリアルのデータのポイントを取得
 	pMat = (D3DXMATERIAL*)GetMotion()->GetModel(2)->GetBuffMat()->GetBufferPointer();
 
+	bool bPresent = false;
+
 	if (pInputKeyboard->GetTrigger(DIK_K) == true
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_A, 0) == true)
 	{//Kが押された
@@ -345,6 +348,8 @@ void CPlayer::Present()
 
 		pMat[1].MatD3D.Diffuse = D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f);
 		pMat[1].MatD3D.Emissive = D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f);
+
+		bPresent = true;
 	}
 	else if (pInputKeyboard->GetTrigger(DIK_L) == true
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_B, 0) == true)
@@ -357,6 +362,8 @@ void CPlayer::Present()
 
 		pMat[1].MatD3D.Diffuse = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
 		pMat[1].MatD3D.Emissive = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
+
+		bPresent = true;
 	}
 	else if (pInputKeyboard->GetTrigger(DIK_J) == true
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_X, 0) == true)
@@ -369,6 +376,8 @@ void CPlayer::Present()
 
 		pMat[1].MatD3D.Diffuse = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
 		pMat[1].MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
+
+		bPresent = true;
 	}
 	else if (pInputKeyboard->GetTrigger(DIK_I) == true
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_Y, 0) == true)
@@ -377,8 +386,23 @@ void CPlayer::Present()
 		// パーティクル生成
 		Myparticle::Create(Myparticle::TYPE_DEATH, pos);
 
+		m_nNumPresent = -1;
+
 		pMat[1].MatD3D.Diffuse = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
 		pMat[1].MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+
+		bPresent = true;
+	}
+
+	if (!bPresent) { return; }
+
+	int nNumLane = m_nPosCounter % MAX_POS;
+	if (CEnemyManager::GetInstance()->GetListEnemy(nNumLane)->empty()) { return; }
+
+	CEnemy* pEnemy = CEnemyManager::GetInstance()->GetListEnemy(m_nPosCounter % MAX_POS)->front();
+	if (pEnemy != nullptr)
+	{
+		pEnemy->Hit(m_nNumPresent);
 	}
 }
 
