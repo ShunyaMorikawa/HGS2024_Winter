@@ -166,19 +166,198 @@ END_CHARACTERSET
 # モーション情報
 #
 #==============================================================================
-#------------------------------------------------------------------------------
-# モーション数
-#------------------------------------------------------------------------------
-NUM_MOTION = 6
+MOTIONSET
+	LOOP = 1
+	NUM_KEY = 2
 
-#------------------------------------------------------------------------------
-# モデルファイル名
-#------------------------------------------------------------------------------
-MOTION_FILENAME = data/TEXT/character/idol/neutral.txt		# [0]デフォルト
-MOTION_FILENAME = data/TEXT/character/idol/left.txt			# [1]デフォルト
-MOTION_FILENAME = data/TEXT/character/idol/right.txt			# [2]デフォルト
-MOTION_FILENAME = data/TEXT/character/idol/win.txt			# [3]デフォルト
-MOTION_FILENAME = data/TEXT/character/idol/clear.txt			# [4]デフォルト
-MOTION_FILENAME = data/TEXT/character/idol/failed.txt			# [5]デフォルト
+	KEYSET
+		FRAME = 10
+		PARTS
+			ROT = 0.00 0.00 0.00
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 0.00 0.00 0.00
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 0.00 0.00 0.00
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 0.00 0.00 1.50
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 0.00 -1.70 0.00
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 0.00 0.00 0.00
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 0.00 0.00 -1.45
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 0.00 1.51 0.00
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 0.00 0.00 0.00
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 0.00 0.00 0.00
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 0.00 0.00 0.00
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 0.00 0.00 0.00
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 0.00 0.00 0.00
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 0.00 0.00 0.00
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 0.00 0.00 0.00
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+	END_KEYSET
+
+	KEYSET
+		FRAME = 10
+		PARTS
+			ROT = 0.00 0.00 0.00
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = -0.53 0.00 0.00
+			POS = 0.00 0.00 -3.50
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 0.53 0.00 0.00
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 1.22 0.00 1.63
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 0.00 -0.44 0.00
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 0.00 0.00 0.00
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 1.32 0.00 -1.64
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 0.00 0.22 0.00
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 0.00 0.00 0.00
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 0.00 0.00 0.00
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 0.00 0.00 0.00
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 0.00 0.00 0.00
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 0.00 0.00 0.00
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 0.00 0.00 0.00
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+		PARTS
+			ROT = 0.00 0.00 0.00
+			POS = 0.00 0.00 0.00
+			SCALE = 1.00 1.00 1.00
+		END_PARTS
+
+	END_KEYSET
+
+END_MOTIONSET
 
 END_SCRIPT		# この行は絶対消さないこと！
