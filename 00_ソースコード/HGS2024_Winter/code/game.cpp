@@ -92,6 +92,9 @@ HRESULT CGame::Init(void)
 	//テクスチャのポインタ
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 
+	// プレイヤー生成
+	CPlayer::Create(Constance::PLAYER_TXT);
+
 	// フィールド生成
 	CField::Create();
 
