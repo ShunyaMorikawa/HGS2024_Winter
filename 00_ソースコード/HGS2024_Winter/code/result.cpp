@@ -103,67 +103,67 @@ HRESULT CResult::Init(void)
 	CWall::Create(D3DXVECTOR3(Constance::WALL_POS, Constance::WALL_POS_Y, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f, -D3DX_PI * 0.5f, 0.0f));
 	CWall::Create(D3DXVECTOR3(-Constance::WALL_POS, Constance::WALL_POS_Y, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f, D3DX_PI * 0.5f, 0.0f));
 
-	FILE* pFile;
+	//FILE* pFile;
 
-	//ファイルから問題を読み込み
-	pFile = fopen("data\\RANKING\\ranking.bin", "rb");
+	////ファイルから問題を読み込み
+	//pFile = fopen("data\\RANKING\\ranking.bin", "rb");
 
-	int nScore[6] = {};
+	//int nScore[6] = {};
 
-	if (pFile != NULL)
-	{//開けた場合
-		fread(&nScore[0], sizeof(int), 6, pFile);
-		fclose(pFile);
-	}
-	else
-	{//開けなかった場合
+	//if (pFile != NULL)
+	//{//開けた場合
+	//	fread(&nScore[0], sizeof(int), 6, pFile);
+	//	fclose(pFile);
+	//}
+	//else
+	//{//開けなかった場合
 
-	 //ランキング初期化
-		for (int nCnt = 0; nCnt < 6; nCnt++)
-		{
-			nScore[nCnt] = 0;
-		}
-	}
+	// //ランキング初期化
+	//	for (int nCnt = 0; nCnt < 6; nCnt++)
+	//	{
+	//		nScore[nCnt] = 0;
+	//	}
+	//}
 
-	nScore[5] = CScore::GetScoreResult();
+	//nScore[5] = CScore::GetScoreResult();
 
-	int nMaxNumber, nTemp;
-	//降順挿入ソート
-	for (int nCnt1 = 1; nCnt1 < 6; nCnt1++)
-	{
-		nMaxNumber = nCnt1;
+	//int nMaxNumber, nTemp;
+	////降順挿入ソート
+	//for (int nCnt1 = 1; nCnt1 < 6; nCnt1++)
+	//{
+	//	nMaxNumber = nCnt1;
 
-		while (nMaxNumber > 0 && nScore[nMaxNumber - 1] < nScore[nMaxNumber])
-		{
-			nTemp = nScore[nMaxNumber - 1];
-			nScore[nMaxNumber - 1] = nScore[nMaxNumber];
-			nScore[nMaxNumber] = nTemp;
+	//	while (nMaxNumber > 0 && nScore[nMaxNumber - 1] < nScore[nMaxNumber])
+	//	{
+	//		nTemp = nScore[nMaxNumber - 1];
+	//		nScore[nMaxNumber - 1] = nScore[nMaxNumber];
+	//		nScore[nMaxNumber] = nTemp;
 
-			nMaxNumber--;
-		}
-	}
+	//		nMaxNumber--;
+	//	}
+	//}
 
-	//ファイルから問題を読み込み
-	pFile = fopen("data\\RANKING\\ranking.bin", "wb");
+	////ファイルから問題を読み込み
+	//pFile = fopen("data\\RANKING\\ranking.bin", "wb");
 
-	if (pFile != NULL)
-	{//開けた場合
+	//if (pFile != NULL)
+	//{//開けた場合
 
-		fwrite(&nScore[0], sizeof(int), 6, pFile);
-		fclose(pFile);
-	}
-	else
-	{//開けなかった場合
+	//	fwrite(&nScore[0], sizeof(int), 6, pFile);
+	//	fclose(pFile);
+	//}
+	//else
+	//{//開けなかった場合
 
-	}
+	//}
 
-	for (int nCnt = 0; nCnt < 5; nCnt++)
-	{
-		m_pScore[nCnt] = CScore::Create(D3DXVECTOR3(800.0f, 101.0f * nCnt + 235.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 50.0f, 100.0f);
-		m_pScore[nCnt]->AddScore(nScore[nCnt]);
-	}
+	//for (int nCnt = 0; nCnt < 5; nCnt++)
+	//{
+	//	m_pScore[nCnt] = CScore::Create(D3DXVECTOR3(800.0f, 101.0f * nCnt + 235.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 50.0f, 100.0f);
+	//	m_pScore[nCnt]->AddScore(nScore[nCnt]);
+	//}
 
-	m_pScore[5] = CScore::Create(D3DXVECTOR3(800.0f, 70.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 50.0f, 100.0f);
+	m_pScore[5] = CScore::Create(D3DXVECTOR3(850.0f, 300.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 100.0f, 200.0f);
 	m_pScore[5]->AddScore(CScore::GetScoreResult());
 
 	pSound->PlaySound(CSound::SOUND_LABEL_BGM_RESULT);

@@ -8,6 +8,8 @@
 #include "enemy.h"
 #include "enemy_manager.h"
 #include "debugproc.h"
+#include "game.h"
+#include "timer.h"
 
 //========================================
 //–¼‘O‹óŠÔ
@@ -93,7 +95,15 @@ void CEnemyManager::Update(void)
 {
 	m_nCntEnemy++;
 
-	if (m_nCntEnemy < 30) { return; }
+	int nTimer = CGame::GetInstance()->GetTimer()->GetTimer();
+	if (nTimer < 1800)
+	{
+		if (m_nCntEnemy < 30) { return; }
+	}
+	else
+	{
+		if (m_nCntEnemy < 60) { return; }
+	}
 
 	int nLane = rand() % 3;
 

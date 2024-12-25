@@ -76,7 +76,8 @@ m_apNumModel	(0),			// モデルの総数
 m_nOldMotion	(0),			// 前回のモーション
 m_eState		(STATE_NONE),	// 状態
 m_fDeltaTime	(0.0f),			// デルタタイム
-m_nMoveCounter		(0),
+m_nMoveCounter(0),
+m_nPosCounter(1),
 m_pEffect		(nullptr),		// エフェクトのポインタ
 m_pMarker		(nullptr)		// ロックオンマーカー表示
 {//値をクリア

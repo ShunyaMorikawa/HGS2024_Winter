@@ -49,6 +49,7 @@ CTimer::CTimer(int nPriority = 6) : CObject(nPriority)
 	m_fHue = 0.0f;
 	m_nScore = 0;
 	m_nTimer = 0;
+	m_bStart = false;
 }
 
 CTimer::~CTimer()
@@ -132,6 +133,8 @@ void CTimer::Uninit(void)
 //=====================================
 void CTimer::Update(void)
 {
+	if (!m_bStart) { return; }
+
 	--m_nTimer;
 	++m_nTimeCounter;
 
