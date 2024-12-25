@@ -183,6 +183,7 @@ void CTutorial::Update(void)
 
 	if (m_bEnd
 		&& pInputKeyboard->GetTrigger(DIK_RETURN)
+		|| pInputPad->GetTrigger(CInputPad::BUTTON_A, 0)
 		|| pInputPad->GetTrigger(CInputPad::BUTTON_START, 0))
 	{// 画面遷移(フェード)
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_GAME);
