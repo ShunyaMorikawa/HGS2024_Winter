@@ -50,8 +50,6 @@ public:
 
 	float GetRadius() { return m_fRadius; }		// ”¼Œaæ“¾
 
-	static CEnemy* GetInstance() { return m_pEnemy; }	// “G‚Ìî•ñæ“¾
-
 private:
 	void NockBack();
 	void Motion();

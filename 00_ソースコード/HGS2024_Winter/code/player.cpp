@@ -172,9 +172,6 @@ void CPlayer::Update(void)
 	// サウンド情報取得
 	CSound* pSound = CManager::GetInstance()->GetSound();
 
-	// 敵の情報取得
-	CEnemy* pEnemy = CEnemy::GetInstance();
-
 	// 位置取得
 	D3DXVECTOR3 pos = GetPos();
 
