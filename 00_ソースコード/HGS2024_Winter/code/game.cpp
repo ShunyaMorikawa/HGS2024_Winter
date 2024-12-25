@@ -108,13 +108,19 @@ HRESULT CGame::Init(void)
 	CSound* pSound = CManager::GetInstance()->GetSound();
 
 	// プレイヤー生成
-	CPlayer::Create(Constance::PLAYER_TXT);
+	CPlayer::Create(Constance::OTAKU_TXT[0]);
 
 	m_pEnemyManager = CEnemyManager::GetInstance();
 	m_pEnemyManager->Init();
 
 	// フィールド生成
 	CField::Create();
+
+	// 4方向に壁生成
+	CWall::Create(D3DXVECTOR3(0.0f, Constance::WALL_POS_Y, -Constance::WALL_POS), D3DXVECTOR3(D3DX_PI * 0.5f, 0.0f, 0.0f));
+	CWall::Create(D3DXVECTOR3(0.0f, Constance::WALL_POS_Y, Constance::WALL_POS), D3DXVECTOR3(D3DX_PI * 0.5f, D3DX_PI, 0.0f));
+	CWall::Create(D3DXVECTOR3(Constance::WALL_POS, Constance::WALL_POS_Y, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f, -D3DX_PI * 0.5f, 0.0f));
+	CWall::Create(D3DXVECTOR3(-Constance::WALL_POS, Constance::WALL_POS_Y, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f, D3DX_PI * 0.5f, 0.0f));
 
 	// スコア生成
 	m_pScore = CScore::Create(D3DXVECTOR3(410.0f, 650.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 80.0f, 50.0f);
@@ -182,11 +188,6 @@ void CGame::Update(void)
 	CPlayer* pPlayer = CPlayer::GetInstance();
 
 	m_pEnemyManager->Update();
-
-	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true)
-	{// 画面遷移(フェード)
-		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_RESULT);
-	}
 
 	// デバッグ表示の情報取得
 	CDebugProc* pDebugProc = CManager::GetInstance()->GetDebugProc();

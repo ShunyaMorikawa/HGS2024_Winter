@@ -51,15 +51,15 @@ namespace
 	const float COOLTIME = 2.0f;		// 攻撃のクールタイム
 	const float SHADOW_SIZE = 50.0f;
 
-	const D3DXVECTOR3 INITIAL_POS = { 0.0f, 0.0f, 400.0f };	// プレイヤー初期位置
+	const D3DXVECTOR3 INITIAL_POS = { 0.0f, 0.0f, 300.0f };	// プレイヤー初期位置
 	const D3DXVECTOR3 INITIAL_ROT = { 0.0f, 0.0f, 0.0f };	// プレイヤー初期向き
 	const D3DXVECTOR3 GAUGE_POS = { 50.0f, 600.0f, 0.0f };	// ゲージの位置
 
 	const D3DXVECTOR3 PLAYER_POS[MAX_POS] =
 	{ 
-		{ -150.0f, 0.0f, 400.0f },
-		{ 0.0f, 0.0f, 400.0f },
-		{ 150.0f, 0.0f, 400.0f },
+		{ -125.0f, 0.0f, 300.0f },
+		{ 0.0f, 0.0f, 300.0f },
+		{ 125.0f, 0.0f, 300.0f },
 	};// プレイヤーの目標位置
 }
 

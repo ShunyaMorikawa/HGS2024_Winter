@@ -49,15 +49,15 @@ namespace
 	const D3DXVECTOR3 INITIAL_POS = { 0.0f, 0.0f, -3000.0f };	// 敵の初期位置
 	const D3DXVECTOR3 GAUGE_POS = { 600.0f, 25.0f, 0.0f };	// 敵ゲージの初期位置
 	const D3DXVECTOR3 GET_POS = { -1000.0f, 0.0f, 300.0f };	// プレゼント受け取った後の位置
-	const D3DXVECTOR3 GET_POS_OTAKU = { 1000.0f, 0.0f, 300.0f };	// プレゼント受け取った後の位置
+	const D3DXVECTOR3 GET_POS_OTAKU = { 1000.0f, 0.0f, 200.0f };	// プレゼント受け取った後の位置
 	const D3DXVECTOR3 LANE_OFFSET = { 0.0f, 0.0f, -150.0f };	// プレゼント受け取った後の位置
-	const D3DXVECTOR3 BILLBOARD_OFFSET = { -75.0f, 100.0f, -30.0f };	// プレゼント受け取った後の位置
+	const D3DXVECTOR3 BILLBOARD_OFFSET = { -50.0f, 100.0f, -30.0f };	// プレゼント受け取った後の位置
 
 	const D3DXVECTOR3 LANE_POS[3] =
 	{
-		{ -150.0f, 0.0f, 200.0f },
+		{ -125.0f, 0.0f, 200.0f },
 		{ 0.0f, 0.0f, 200.0f },
-		{ 150.0f, 0.0f, 200.0f },
+		{ 125.0f, 0.0f, 200.0f },
 	};// プレイヤーの目標位置
 
 	const char* m_apFilename[3] =
