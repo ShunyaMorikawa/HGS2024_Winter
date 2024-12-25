@@ -17,8 +17,8 @@
 //=======================================
 namespace
 {
-	const float CAMERA_POS_Y = 375.0f;		// カメラのY座標の初期位置
-	const float CAMERA_POS_Z = -1000.0f;	// カメラのZ座標の初期位置
+	const float CAMERA_POS_Y = 200.0f;		// カメラのY座標の初期位置
+	const float CAMERA_POS_Z = -850.0f;	// カメラのZ座標の初期位置
 	const float CAMERA_DISTANCE = 400.0f;	// カメラとの距離
 	const float CAMERA_SPEED = 1.5f;		// カメラの移動速度
 	const float CMAERA_INERTIA = 0.2f;		// カメラの慣性
